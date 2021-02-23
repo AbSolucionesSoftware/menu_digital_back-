@@ -1,6 +1,7 @@
 const companyCtrl = {};
 const modelCompany = require('../models/Company');
 const bcrypt = require('bcrypt-nodejs');
+const jwt = require("jsonwebtoken");
 
 companyCtrl.createCompany = async (req,res) => {
     try {
@@ -29,11 +30,20 @@ companyCtrl.createCompany = async (req,res) => {
                                 });
                             } else {
                               if (!userStored) {
-                                res
-                                  .status(404)
-                                  .json({ message: "Error al crear el usuario" });
+                                res.status(404).json({ message: "Error al crear el usuario" });
                               } else {
-                                res.status(200).json({ message: "Empresa agregada." });
+                                const token = jwt.sign(
+                                    {
+                                      nameCompany: userStored.nameCompany,
+                                      nameUser: userStored.nameUser,
+                                      public: userStored.public,
+                                      owner: userStored.owner,
+                                      phone: userStored.phone,
+                                      type: userStored.type,
+                                    },
+                                    process.env.AUTH_KEY
+                                  );
+                                res.status(200).json({token});
                               }
                             }
                           })
