@@ -83,17 +83,23 @@ companyCtrl.inicioSesion = async (req,res) => {
             if(userBase.public == false){
                 res.status(500).json({message: "Este usuario no esta activo."});
             }else{
-                const token = jwt.sign(
-                    {
-                      nameCompany: userStored.nameCompany,
-                      nameUser: userStored.nameUser,
-                      public: userStored.public,
-                      owner: userStored.owner,
-                      phone: userStored.phone,
-                      type: userStored.type,
-                    },
-                    process.env.AUTH_KEY
-                  );
+                if (!bcrypt.compareSync(password, userBase.password)) {
+                    res.status(404).json({ message: "Contraseña incorrecta" });
+                  } else {
+                    const token = jwt.sign(
+                        {
+                          nameCompany: userBase.nameCompany,
+                          nameUser: userBase.nameUser,
+                          public: userBase.public,
+                          owner: userBase.owner,
+                          phone: userBase.phone,
+                          type: userBase.type,
+                        },
+                        process.env.AUTH_KEY
+                      );
+                    //token
+                    res.status(200).json({ token });
+                  }
             }
         }else{
             res.status(404).json({message: "Este usuario no existe."});
