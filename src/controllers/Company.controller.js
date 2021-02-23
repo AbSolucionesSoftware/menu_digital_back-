@@ -9,6 +9,7 @@ companyCtrl.createCompany = async (req,res) => {
         console.log(req.body);
         const newCompany = new modelCompany(req.body);
         newCompany.public = false;
+        newCompany.type = false;
         if(!password || !repeatPassword){
             res.status(404).json({ message: "Las contrasenas son obligatorias." });
         } else {
@@ -32,18 +33,7 @@ companyCtrl.createCompany = async (req,res) => {
                               if (!userStored) {
                                 res.status(404).json({ message: "Error al crear el usuario" });
                               } else {
-                                const token = jwt.sign(
-                                    {
-                                      nameCompany: userStored.nameCompany,
-                                      nameUser: userStored.nameUser,
-                                      public: userStored.public,
-                                      owner: userStored.owner,
-                                      phone: userStored.phone,
-                                      type: userStored.type,
-                                    },
-                                    process.env.AUTH_KEY
-                                  );
-                                res.status(200).json({token});
+                                res.status(200).json({message: "Usuario agregado."});
                               }
                             }
                           })
@@ -79,6 +69,35 @@ companyCtrl.getCompany = async (req,res) => {
 companyCtrl.deleteCompany = async (req,res) => {
     try {
         
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
+companyCtrl.inicioSesion = async (req,res) => {
+    try {
+        const { nameUser, password } = req.body;
+        const userBase = await modelCompany.findOne({nameUser: nameUser});
+        if(userBase){
+            if(userBase.public == false){
+                res.status(500).json({message: "Este usuario no esta activo."});
+            }else{
+                const token = jwt.sign(
+                    {
+                      nameCompany: userStored.nameCompany,
+                      nameUser: userStored.nameUser,
+                      public: userStored.public,
+                      owner: userStored.owner,
+                      phone: userStored.phone,
+                      type: userStored.type,
+                    },
+                    process.env.AUTH_KEY
+                  );
+            }
+        }else{
+            res.status(404).json({message: "Este usuario no existe."});
+        }
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
         console.log(error);
