@@ -102,7 +102,7 @@ companyCtrl.editCompany = async (req,res) => {
 
 companyCtrl.getCompanys = async (req,res) => {
     try {
-        const companys = modelCompany.find({});
+        const companys = await modelCompany.find({});
         res.status(200).json(companys);
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
