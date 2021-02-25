@@ -18,9 +18,12 @@ bannerCtrl.createBanner = async (req,res) => {
         if(req.file){
           newBanner.imagenBannerKey = req.file.key;
           newBanner.imagenBannerUrl = req.file.location;
+          await newBanner.save();
+          res.status(200).json({message: "Banner agregado."});
+        }else{
+          res.status(404).json({message: "Imagen necesaria."});
         }
-        await newBanner.save();
-        res.status(200).json({message: "Banner agregado."});
+
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
