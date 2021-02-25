@@ -13,6 +13,6 @@ app.use(express.json());
 //Rutes
 app.use('/api/company',require('./routes/Company'));
 app.use('/api/banner',require('./routes/Banner'));
-app.use('/api/banner',require('./routes/Product'));
+app.use('/api/product',require('./routes/Product'));
 
 module.exports = app;
