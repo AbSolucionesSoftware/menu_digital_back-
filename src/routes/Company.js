@@ -9,7 +9,7 @@ router.route('/admin').post(auth,createCompanyAdmin);
 
 router.route('/logIn').post(inicioSesion);
 
-router.route('/:idCompany').post(auth,getCompany).put(auth,editCompany);
+router.route('/:idCompany').get(auth,getCompany).put(auth,editCompany);
 
 router.route('/resetPass/:idCompany').put(auth,resetPassCompany);
 
