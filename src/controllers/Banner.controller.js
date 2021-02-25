@@ -11,7 +11,7 @@ bannerCtrl.uploadImagen = async (req, res, next) => {
     });
 };
 
-bannerCtrl.createBanner = async (req,res) => {
+bannerCtrl.createBanner = async (req, res) => {
     try {
         const newBanner = new modelBanner(req.body);
         console.log(req.body);

@@ -7,6 +7,6 @@ router.route('/').post(auth,uploadImagen,createBanner);
 
 router.route('/:idBanner').put(auth,editBanner).delete(auth,deleteBaneer);
 
-router.route('/company/:idCompany').get(auth,getBanner);
+router.route('/banner-company/:idCompany').get(auth,getBanner);
 
 module.exports = router;
