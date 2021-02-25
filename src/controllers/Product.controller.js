@@ -29,6 +29,7 @@ productCtrl.createProduct = async (req,res) => {
     }
 }
 
+
 productCtrl.editProduct = async (req,res) => {
     try {
         
