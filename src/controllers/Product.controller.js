@@ -2,7 +2,7 @@ const productCtrl = {};
 const upliadImagen = require('../middleware/awsFile');
 const modelProduct = require('../models/Product');
 
-bannerCtrl.uploadImagen = async (req, res, next) => {
+productCtrl.uploadImagen = async (req, res, next) => {
     await upliadImagen.upload(req, res, function (err) {
       if (err) {
         res.json({ message: err });

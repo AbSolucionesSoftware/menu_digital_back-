@@ -73,16 +73,5 @@ bannerCtrl.getBanner = async (req,res) => {
     }
 }
 
-bannerCtrl.resetPassCompany = async (req,res) => {
-  try {
-      const bannersComapny = await modelBanner.find({company: req.params.idCompany});
-      res.status(200).json(bannersComapny);
-  } catch (error) {
-    res.status(500).json({message: "Error del servidor"}, error);
-    console.log(error);
-  }
-}
-
-
 
 module.exports = bannerCtrl;
