@@ -9,14 +9,14 @@ bannerCtrl.uploadImagen = async (req, res, next) => {
       }
       return next();
     });
-  };
+};
 
 bannerCtrl.createBanner = async (req,res) => {
     try {
         const newBanner = new modelBanner(req.body);
         if(req.file){
           newBanner.imagenBannerKey = req.file.key;
-          newBanner.imagenBannerUrl = req.file.key;
+          newBanner.imagenBannerUrl = req.file.location;
         }
         newBanner.save();
         res.status(200).json({message: "Banner agregado."});
@@ -32,7 +32,7 @@ bannerCtrl.editBanner = async (req,res) => {
         const newBanner = editBanner;
         if(req.file){
           newBanner.imagenBannerKey = req.file.key;
-          newBanner.imagenBannerUrl = req.file.key;
+          newBanner.imagenBannerUrl = req.file.location;
           if(editBanner.imagenBannerKey){
             upliadImagen.eliminarImagen(editBanner.imagenBannerKey);
           }
@@ -50,6 +50,9 @@ bannerCtrl.deleteBaneer = async (req,res) => {
     try {
         const bannerDelete = await modelBanner.findById(req.params.idBanner);
         if(bannerDelete){
+          if(bannerDelete.imagenProductKey){
+            upliadImagen.eliminarImagen(bannerDelete.imagenProductKey);
+          }
           await modelBanner.findByIdAndDelete(bannerDelete._id);
         }else{
           res.status(404).json({message: "Este banner no existe."});

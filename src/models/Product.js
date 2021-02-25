@@ -1,13 +1,15 @@
-const { Schema, model } = require('mongoose');
-
+var mongoose = require('mongoose');
+var Float = require('mongoose-float').loadType(mongoose,4);
+const { Schema, model } = mongoose;
 
 const productSchema = new Schema(
     {
         category: String,
         subCategory: String,
         name: String,
-        imagen: String,
-        price: String,
+        imagenProductKey: String,
+        imagenProductUrl: String,
+        price: Float,
         description: String,
     },
     {

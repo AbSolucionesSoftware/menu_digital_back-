@@ -93,7 +93,50 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
 
 companyCtrl.editCompany = async (req,res) => {
     try {
-        
+        const { nameCompany, owner, phone } = req.body;
+        const newCompany = {
+            nameCompany: nameCompany,
+            owner: owner,
+            phone: phone
+        }
+        await modelCompany.findByIdAndUpdate(req.params.idCompany,newCompany);
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+            {
+              nameCompany: newCompanyBase.nameCompany,
+              nameUser: newCompanyBase.nameUser,
+              public: newCompanyBase.public,
+              owner: newCompanyBase.owner,
+              phone: newCompanyBase.phone,
+              type: newCompanyBase.type,
+            },
+            process.env.AUTH_KEY
+          );
+        res.status(200).json({ token });
+
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
+companyCtrl.resetPassCompany = async (req,res) => {
+    try {
+        const { password, repeatPassword } = req.body;
+
+        if(password !== repeatPassword){
+            res.status(404).json({ message: "Las contrasenas no son iguales." });
+        } else {
+            bcrypt.hash(password, null, null, async function (err, hash){
+                if(err){
+                    res.status(500).json({message: "Ups, algo paso al registrar el usuario",err,});
+                } else {
+                    await modelCompany.findByIdAndUpdate(req.params.idCompany,{password: hash});
+                    res.status(200).json({message: "Usuario actualizado."});
+                }
+            })
+        }
+
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
         console.log(error);
@@ -112,7 +155,7 @@ companyCtrl.getCompanys = async (req,res) => {
 
 companyCtrl.getCompany = async (req,res) => {
     try {
-        const companys = modelCompany.findById(req.params.idCompany);
+        const companys = await modelCompany.findById(req.params.idCompany);
         res.status(200).json(companys);
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
