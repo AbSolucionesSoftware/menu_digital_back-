@@ -103,6 +103,7 @@ companyCtrl.editCompany = async (req,res) => {
         const newCompanyBase = await modelCompany.findById(req.params.idCompany);
         const token = jwt.sign(
             {
+              _id: newCompanyBase._id,
               nameCompany: newCompanyBase.nameCompany,
               nameUser: newCompanyBase.nameUser,
               public: newCompanyBase.public,
@@ -185,6 +186,7 @@ companyCtrl.inicioSesion = async (req,res) => {
                   } else {
                     const token = jwt.sign(
                         {
+                          _id: userBase._id,
                           nameCompany: userBase.nameCompany,
                           nameUser: userBase.nameUser,
                           public: userBase.public,
