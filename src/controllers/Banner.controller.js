@@ -5,7 +5,7 @@ const modelBanner = require('../models/Banner');
 bannerCtrl.uploadImagen = async (req, res, next) => {
     await upliadImagen.upload(req, res, function (err) {
       if (err) {
-        res.json({ message: err });
+        res.status(500).json({ message: err });
       }
       return next();
     });
