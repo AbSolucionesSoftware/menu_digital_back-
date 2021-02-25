@@ -14,11 +14,12 @@ bannerCtrl.uploadImagen = async (req, res, next) => {
 bannerCtrl.createBanner = async (req,res) => {
     try {
         const newBanner = new modelBanner(req.body);
+        console.log(req.body);
         if(req.file){
           newBanner.imagenBannerKey = req.file.key;
           newBanner.imagenBannerUrl = req.file.location;
         }
-        newBanner.save();
+        await newBanner.save();
         res.status(200).json({message: "Banner agregado."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
