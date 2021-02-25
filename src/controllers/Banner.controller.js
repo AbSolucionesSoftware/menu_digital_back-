@@ -15,6 +15,7 @@ bannerCtrl.createBanner = async (req, res) => {
     try {
         const newBanner = new modelBanner(req.body);
         console.log(req.body);
+        console.log(req.file);
         if(req.file){
           newBanner.imagenBannerKey = req.file.key;
           newBanner.imagenBannerUrl = req.file.location;
