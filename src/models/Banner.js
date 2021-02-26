@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose');
 
-const companySchema = new Schema(
+const bannerSchema = new Schema(
     {
         imagenBannerKey: String,
         imagenBannerUrl: String,
         company: {
             type: Schema.ObjectId,
-            ref: 'cliente'
+            ref: 'company'
         }
     },
     {
@@ -14,4 +14,4 @@ const companySchema = new Schema(
     }
 )
 
-model.exports = model('banner', companySchema);
+module.exports = model('banner', bannerSchema);

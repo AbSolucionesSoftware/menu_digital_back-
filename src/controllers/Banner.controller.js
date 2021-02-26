@@ -2,10 +2,10 @@ const bannerCtrl = {};
 const upliadImagen = require('../middleware/awsFile');
 const modelBanner = require('../models/Banner');
 
-bannerCtrl.uploadImagen = async (req, res, next) => {
-    await upliadImagen.upload(req, res, function (err) {
+bannerCtrl.uploadImagen = (req, res, next) => {
+    upliadImagen.upload(req, res, function (err) {
       if (err) {
-        res.status(500).json({ message: err });
+        //res.status(500).json({ message: err });
       }
       return next();
     });
@@ -13,7 +13,7 @@ bannerCtrl.uploadImagen = async (req, res, next) => {
 
 bannerCtrl.createBanner = async (req, res) => {
     try {
-        const newBanner = new modelBanner(req.body);
+        const newBanner = new modelBanner();
         console.log(req.body);
         console.log(req.file);
         if(req.file){
