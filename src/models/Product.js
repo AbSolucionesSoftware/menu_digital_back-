@@ -11,6 +11,10 @@ const productSchema = new Schema(
         imagenProductUrl: String,
         price: Float,
         description: String,
+        company: {
+            type: Schema.ObjectId,
+            ref: 'company'
+        }
     },
     {
         timestamps: true
