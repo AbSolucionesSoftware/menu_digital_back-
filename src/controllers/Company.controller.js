@@ -166,6 +166,7 @@ companyCtrl.getCompany = async (req,res) => {
 
 companyCtrl.deleteCompany = async (req,res) => {
     try {
+        const company = await modelCompany.findById(req.params.idCompany);
         
     } catch (error) {
         res.status(500).json({message: "Error del server", error})

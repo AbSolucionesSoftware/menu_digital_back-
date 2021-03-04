@@ -7,7 +7,7 @@ router.route('/:idCompany').post(auth,uploadImagen,createProduct).get(getProduct
 
 router.route('/edit/:idProducto').put(auth,uploadImagen,editProduct).delete(auth,deleteProduct);
 
-router.route('/categiories/:idCompany').get(agruparCategoriasFiltro);
+router.route('/categories/:idCompany').get(agruparCategoriasFiltro);
 
 router.route('/search/').get(filtroBusqueda);
 
