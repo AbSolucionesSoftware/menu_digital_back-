@@ -18,18 +18,18 @@ productCtrl.createProduct = async (req,res) => {
         if(req.file){
             newProduct.imagenProductKey = req.file.key;
             newProduct.imagenProductUrl = req.file.location;
-            newProduct.company = req.params.idCompany;
-            await newProduct.save();
-            res.status(200).json({message: "Producto agregado"})
         }else{
-            res.status(505).json({message: "Imagen necesaria."})
+            newProduct.imagenProductKey = "";
+            newProduct.imagenProductUrl = "";
         }
+        newProduct.company = req.params.idCompany;
+        await newProduct.save();
+        res.status(200).json({message: "Producto agregado"})
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
     }
 }
-
 
 productCtrl.editProduct = async (req,res) => {
     try {
