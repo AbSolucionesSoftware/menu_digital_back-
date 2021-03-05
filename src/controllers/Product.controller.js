@@ -105,7 +105,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 								[
 									{
 										$match: {
-											$or: [ { categoria: categorias[i]._id }, { eliminado: { $exists: false } }, { eliminado: false } ]
+											category: categorias[i]._id
 										}
 									},
 									{
