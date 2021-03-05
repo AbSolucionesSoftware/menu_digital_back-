@@ -13,6 +13,4 @@ router.route('/:idCompany').get(getCompany).put(auth,editCompany).delete(deleteC
 
 router.route('/resetPass/:idCompany').put(auth,resetPassCompany);
 
-
-
 module.exports = router;

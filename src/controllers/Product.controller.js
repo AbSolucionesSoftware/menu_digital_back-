@@ -14,6 +14,7 @@ productCtrl.uploadImagen = async (req, res, next) => {
 productCtrl.createProduct = async (req,res) => {
     try {
         /* const { category, subCategory, name, price, description } = req.body; */
+        console.log(req.body);
         const newProduct = new modelProduct(req.body);
         if(req.file){
             newProduct.imagenProductKey = req.file.key;
