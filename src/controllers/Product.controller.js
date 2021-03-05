@@ -92,7 +92,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 				for (i = 0; i < categorias.length; i++) {
 					if (categorias[i]._id !== null) {
 						if (categorias[i]._id) {
-						const subCategoriasBase =await Producto.aggregate(
+						const subCategoriasBase =await modelProduct.aggregate(
 								[
 									{
 										$match: {
