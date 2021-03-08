@@ -134,7 +134,8 @@ productCtrl.filtroBusqueda = async (req, res) => {
 							{ name: { $regex: '.*' + filter + '.*', $options: 'i' } },
 							{ category: { $regex: '.*' + filter + '.*', $options: 'i' } },
 							{ subCategory: { $regex: '.*' + filter + '.*', $options: 'i' } }
-						]
+						],
+                        $and: [ { company: req.params.idCompany } ]
 					}
 				}
 			],
