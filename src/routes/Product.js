@@ -21,6 +21,6 @@ router.route("/edit/:idProducto")
 
 router.route("/categories/:idCompany").get(agruparCategoriasFiltro);
 
-router.route("/search/").post(filtroBusqueda);
+router.route("/search/company/:idCompany").post(filtroBusqueda);
 
 module.exports = router;
