@@ -124,8 +124,8 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 
 productCtrl.filtroBusqueda = async (req, res) => {
     try {
-        const {filter} = req.query;
-        await Producto.aggregate(
+        const { filter } = req.query;
+        await modelProduct.aggregate(
 			[
 				{
 					$match: {
