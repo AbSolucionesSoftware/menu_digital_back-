@@ -125,6 +125,7 @@ productCtrl.filtroBusqueda = async (req, res) => {
     try {
         const { filter } = req.body;
         console.log(filter);
+        console.log(req.params.idCompany);
         await modelProduct.aggregate(
 			[
 				{
