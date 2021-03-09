@@ -130,7 +130,7 @@ productCtrl.filtroBusqueda = async (req, res) => {
 			[
 				{
 					$match: {
-                        $and: [  { company: {  $convert : {  input :  req.params.idCompany ,  to :  "objectId"  }  } } ],
+                        $and: [  { company: req.params.idCompany } ],
 						$or: [
 							{ name: { $regex: '.*' + "Camarones" + '.*', $options: 'i' } },
 							{ category: { $regex: '.*' + "Camarones" + '.*', $options: 'i' } },
