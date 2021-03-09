@@ -86,13 +86,12 @@ productCtrl.getProductCompany = async (req,res) => {
 productCtrl.agruparCategoriasFiltro = async (req,res) => {
     try {
         await modelProduct.find({company: req.params.idCompany},async function(err, categorias) {
-				arrayCategorias = [];
-				console.log(categorias);
+				arrayCategorias = []; 
 				console.log(categorias.length);
 				for (i = 0; i < categorias.length; i++) {
 					if (categorias[i]._id !== null) {
 						if (categorias[i]._id) {
-						const subCategoriasBase =await modelProduct.aggregate(
+						const subCategoriasBase = await modelProduct.aggregate(
 								[
 									{
 										$match: {
@@ -100,7 +99,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 										}
 									},
 									{
-										$group: { _id: '$subCategoria' }
+										$group: { _id: '$subCategory' }
 									}
 								],
 								async function(err, subCategoriasBase) {
@@ -109,7 +108,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 							);
 							arrayCategorias.push({
 								categoria: categorias[i].category,
-								subcCategoria: subCategoriasBase
+								subCategoria: subCategoriasBase
 							});
 						}
 					}
