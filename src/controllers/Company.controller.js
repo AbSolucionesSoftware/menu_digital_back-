@@ -144,6 +144,39 @@ companyCtrl.resetPassCompany = async (req,res) => {
     }
 }
 
+companyCtrl.resetPassCompanyUser = async (req,res) => {
+    try {
+        const {currentPassword, password, repeatPassword } = req.body;
+        const companyBase = await modelCompany.findById(req.params.idCompany);
+
+        if(companyBase){
+            if(password !== repeatPassword){
+                res.status(404).json({ message: "Las contraseñas no son iguales." });
+            } else {
+                if(!bcrypt.compareSync(currentPassword, companyBase.password)){
+                    res.status(404).json({message: "La contraseña no coincide."})
+                }else{
+                    bcrypt.hash(password, null, null, async function (err, hash){
+                        if(err){
+                            res.status(500).json({message: "Ups, algo paso al registrar el usuario",err,});
+                        } else {
+                            await modelCompany.findByIdAndUpdate(req.params.idCompany,{password: hash});
+                            res.status(200).json({message: "Contraseña cambiada"});
+                        }
+                    })
+                }
+            }
+        }else{
+            res.status(404).json({message: "Este usuario no existe."})
+        }
+        
+
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
 companyCtrl.getCompanys = async (req,res) => {
     try {
         const companys = await modelCompany.find({});
