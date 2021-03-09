@@ -123,8 +123,10 @@ companyCtrl.editCompany = async (req,res) => {
 
 companyCtrl.resetPassCompany = async (req,res) => {
     try {
-        const { password, repeatPassword } = req.body;
+        const { password, repeatPassword  } = req.body;
         console.log(req.body);
+        console.log(password);
+        console.log(repeatPassword);
         if(password !== repeatPassword){
             res.status(404).json({ message: "Las contrasenas no son iguales." });
         } else {
