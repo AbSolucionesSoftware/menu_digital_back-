@@ -158,4 +158,15 @@ productCtrl.filtroBusqueda = async (req, res) => {
     }
 }
 
+productCtrl.filterSubCategorie = async (req,res) => {
+    try {
+        const { subCategory } = req.body;
+        const filterSub = await modelProduct.find({subCategory: subCategory, company: req.params.idCompany});
+        res.status(200).json(filterSub);
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+
 module.exports = productCtrl;
