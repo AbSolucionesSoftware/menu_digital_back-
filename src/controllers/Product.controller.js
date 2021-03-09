@@ -130,7 +130,7 @@ productCtrl.filtroBusqueda = async (req, res) => {
 				{
 					$match: {
 						$or: [
-							{ name: { $regex: '.*' + filter + '.*', $options: 'i' } },
+							{ name: { $regex: '.*' + "Bolillo" + '.*', $options: 'i' } },
 							{ category: { $regex: '.*' + filter + '.*', $options: 'i' } },
 							{ subCategory: { $regex: '.*' + filter + '.*', $options: 'i' } }
 						],
