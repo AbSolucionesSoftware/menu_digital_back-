@@ -174,6 +174,7 @@ productCtrl.filterSubCategorie = async (req,res) => {
     try {
         const { subCategory } = req.body;
         console.log(req.body);
+        console.log(req.params.idCompany);
         const filterSub = await modelProduct.find({subCategory: subCategory, company: req.params.idCompany});
         res.status(200).json(filterSub);
     } catch (error) {
