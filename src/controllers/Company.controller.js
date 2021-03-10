@@ -2,6 +2,8 @@ const companyCtrl = {};
 const modelCompany = require('../models/Company');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require("jsonwebtoken");
+const modelProduct = require("../models/Product");
+const upluadFile = require("../middleware/awsFile");
 
 companyCtrl.createCompany = async (req,res) => {
     try {
@@ -202,6 +204,21 @@ companyCtrl.getCompany = async (req,res) => {
 companyCtrl.deleteCompany = async (req,res) => {
     try {
         const company = await modelCompany.findById(req.params.idCompany);
+        if(company){
+            const product = await modelProduct.find({company: company._id});
+            if(product.length > 0){
+                product.map(async (producto) => {
+                    if(producto.imagenProductKey !== ""){
+                        upluadFile.eliminarImagen(producto.imagenProductKey);
+                    }
+                    await modelProduct.findByIdAndDelete(producto._id);
+                })
+            }
+            await modelCompany.findByIdAndDelete(company._id);
+            res.status(200).json({message: "Compania eliminada."});
+        }else{
+            res.status(500).json({message: "Esta compania no existe."});
+        }
         
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
@@ -239,6 +256,18 @@ companyCtrl.inicioSesion = async (req,res) => {
         }else{
             res.status(404).json({message: "Este usuario no existe."});
         }
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
+companyCtrl.PublicCompany = async (req,res) => {
+    try {
+        const { public } = req.body;
+        console.log(public);
+        await modelCompany.findByIdAndUpdate(req.params.idCompany,{public: public});
+        res.status(200).json({message: "Cambio realizado."});
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
         console.log(error);

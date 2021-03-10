@@ -7,7 +7,6 @@ const {
   getProductCompany,
   deleteProduct,
   agruparCategoriasFiltro,
-  filtroBusqueda,
   filterSubCategorie
 } = require("../controllers/Product.controller");
 const auth = require("../middleware/auth");

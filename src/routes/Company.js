@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { createCompany, inicioSesion, createCompanyAdmin, getCompanys, getCompany, editCompany , resetPassCompany, deleteCompany, resetPassCompanyUser } = require('../controllers/Company.controller');
+const { createCompany, inicioSesion, createCompanyAdmin, getCompanys, getCompany, editCompany , resetPassCompany, deleteCompany, resetPassCompanyUser, PublicCompany } = require('../controllers/Company.controller');
 const auth = require('../middleware/auth');
 
 router.route('/').post(auth,createCompany).get(auth,getCompanys);
@@ -14,5 +14,7 @@ router.route('/:idCompany').get(getCompany).put(auth,editCompany).delete(deleteC
 router.route('/resetPass/:idCompany').put(auth,resetPassCompany);
 
 router.route('/resetPass/user/:idCompany').put(auth,resetPassCompanyUser);
+
+router.route('/public/action/:idCompany').put(PublicCompany);
 
 module.exports = router;
