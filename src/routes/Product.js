@@ -21,7 +21,7 @@ router.route("/edit/:idProducto")
 
 router.route("/categories/:idCompany").get(agruparCategoriasFiltro);
 
-router.route("/search/subCategory/").post(filterSubCategorie);
+router.route("/search/subCategory/:idCompany").post(filterSubCategorie);
 
 
 
