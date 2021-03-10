@@ -107,7 +107,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 								[
 									{
 										$match: {
-											category: categorias[i].category
+											category: categorias[i]._id
 										}
 									},
 									{
@@ -119,7 +119,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 								}
 							);
 							arrayCategorias.push({
-								categoria: categorias[i].category,
+								categoria: categorias[i]._id,
 								subCategoria: subCategoriasBase
 							});
 						}
