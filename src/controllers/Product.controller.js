@@ -85,16 +85,7 @@ productCtrl.getProductCompany = async (req,res) => {
 
 productCtrl.agruparCategoriasFiltro = async (req,res) => {
     try {
-        
-        await modelProduct.aggregate(
-			[
-				{
-					$match: {
-						company: req.params.idCompany
-					}
-				},
-				{ $group: { _id: '$category' } }
-			],async function(err, categorias) {
+        await modelProduct.find({company: req.params.idCompany},async function(err, categorias) {
 				arrayCategorias = []; 
 				console.log(categorias.length);
 				for (i = 0; i < categorias.length; i++) {
