@@ -99,6 +99,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 			],async function(err, categorias) {
 				arrayCategorias = []; 
 				console.log(categorias.length);
+				console.log(categorias);
 				for (i = 0; i < categorias.length; i++) {
 					if (categorias[i]._id !== null) {
 						if (categorias[i]._id) {
