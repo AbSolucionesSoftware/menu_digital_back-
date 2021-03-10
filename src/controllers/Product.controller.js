@@ -95,7 +95,7 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 						company: new ObjectId(req.params.idCompany)
 					}
 				},
-				{ $group: { _id: '$categoria' } }
+				{ $group: { _id: '$category' } }
 			],async function(err, categorias) {
 				arrayCategorias = []; 
 				console.log(categorias.length);
