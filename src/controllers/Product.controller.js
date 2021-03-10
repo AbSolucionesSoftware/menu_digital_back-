@@ -1,6 +1,8 @@
 const productCtrl = {};
 const upliadImagen = require('../middleware/awsFile');
 const modelProduct = require('../models/Product');
+var Mongoose = require('mongoose');
+var ObjectId = Mongoose.Types.ObjectId;
 
 productCtrl.uploadImagen = async (req, res, next) => {
     await upliadImagen.upload(req, res, function (err) {
@@ -85,7 +87,16 @@ productCtrl.getProductCompany = async (req,res) => {
 
 productCtrl.agruparCategoriasFiltro = async (req,res) => {
     try {
-        await modelProduct.find({company: req.params.idCompany},async function(err, categorias) {
+        
+        await modelProduct.aggregate(
+			[
+				{
+					$match: {
+						company: new ObjectId(req.params.idCompany)
+					}
+				},
+				{ $group: { _id: '$categoria' } }
+			],async function(err, categorias) {
 				arrayCategorias = []; 
 				console.log(categorias.length);
 				for (i = 0; i < categorias.length; i++) {
