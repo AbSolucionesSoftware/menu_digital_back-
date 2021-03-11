@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 router.route('/').post(auth,uploadImagen,createBanner);
 
-router.route('/:idBanner').put(auth,editBanner).delete(auth,deleteBaneer);
+router.route('/:idBanner').put(auth,uploadImagen,editBanner).delete(auth,deleteBaneer);
 
 router.route('/banner-company/:idCompany').get(getBanner);
 
