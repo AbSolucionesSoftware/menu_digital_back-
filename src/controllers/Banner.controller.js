@@ -34,14 +34,11 @@ bannerCtrl.createBanner = async (req, res) => {
 bannerCtrl.editBanner = async (req,res) => {
     try {
         const editBanner = await modelBanner.findById(req.params.idBanner);
-        const uploadImagen = editBanner;
         if(req.file){
-          uploadImagen.imagenBannerKey = req.file.key;
-          uploadImagen.imagenBannerUrl = req.file.location;
           if(editBanner.imagenBannerKey){
             upliadImagen.eliminarImagen(editBanner.imagenBannerKey);
           }
-          await modelBanner.findByIdAndUpdate(req.params.idBanner,uploadImagen);
+          await modelBanner.findByIdAndUpdate(req.params.idBanner,{imagenBannerKey = req.file.key,imagenBannerUrl = req.file.location});
           res.status(200).json({message: "Banner editado."});
         }else{
           res.status(404).json({message: "No existe imagen."});
