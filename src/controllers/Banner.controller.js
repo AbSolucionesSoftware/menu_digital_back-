@@ -34,10 +34,10 @@ bannerCtrl.createBanner = async (req, res) => {
 bannerCtrl.editBanner = async (req,res) => {
     try {
         const editBanner = await modelBanner.findById(req.params.idBanner);
-        const uploadImagen, = editBanner;
+        const uploadImagen = editBanner;
         if(req.file){
-          newBanner.imagenBannerKey = req.file.key;
-          newBanner.imagenBannerUrl = req.file.location;
+          uploadImagen.imagenBannerKey = req.file.key;
+          uploadImagen.imagenBannerUrl = req.file.location;
           if(editBanner.imagenBannerKey){
             upliadImagen.eliminarImagen(editBanner.imagenBannerKey);
           }
