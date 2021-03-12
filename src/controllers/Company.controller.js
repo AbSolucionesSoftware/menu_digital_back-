@@ -95,11 +95,12 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
 
 companyCtrl.editCompany = async (req,res) => {
     try {
-        const { nameCompany, owner, phone } = req.body;
+        const { nameCompany, owner, phone,slug } = req.body;
         const newCompany = {
             nameCompany: nameCompany,
             owner: owner,
-            phone: phone
+            phone: phone,
+            slug: slug
         }
         await modelCompany.findByIdAndUpdate(req.params.idCompany,newCompany);
         const newCompanyBase = await modelCompany.findById(req.params.idCompany);

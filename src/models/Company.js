@@ -12,7 +12,8 @@ const companySchema = new Schema(
         owner: String,
         phone: String,
         password: String,
-        type: Boolean
+        type: Boolean,
+        slug: String
     },
     {
         timestamps: true
