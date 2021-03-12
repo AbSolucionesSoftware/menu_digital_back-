@@ -113,6 +113,7 @@ companyCtrl.editCompany = async (req,res) => {
               owner: newCompanyBase.owner,
               phone: newCompanyBase.phone,
               type: newCompanyBase.type,
+              slug: newCompanyBase.slug
             },
             process.env.AUTH_KEY
           );
@@ -247,6 +248,7 @@ companyCtrl.inicioSesion = async (req,res) => {
                           owner: userBase.owner,
                           phone: userBase.phone,
                           type: userBase.type,
+                          slug: newCompanyBase.slug
                         },
                         process.env.AUTH_KEY
                       );
