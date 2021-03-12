@@ -248,7 +248,7 @@ companyCtrl.inicioSesion = async (req,res) => {
                           owner: userBase.owner,
                           phone: userBase.phone,
                           type: userBase.type,
-                          slug: newCompanyBase.slug
+                          slug: userBase.slug
                         },
                         process.env.AUTH_KEY
                       );
