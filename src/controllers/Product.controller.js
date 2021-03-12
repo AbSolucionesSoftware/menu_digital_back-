@@ -47,7 +47,7 @@ productCtrl.editProduct = async (req,res) => {
             newProduct.imagenProductUrl = req.file.location;
         }else{
             newProduct.imagenProductKey = productBase.imagenProductKey;
-            newProduct.imagenProductUrl = productBase.imagenProductKey;
+            newProduct.imagenProductUrl = productBase.imagenProductUrl;
         }
         await modelProduct.findByIdAndUpdate(req.params.idProducto,newProduct);
         res.status(200).json({message: "Producto actualizado."})
