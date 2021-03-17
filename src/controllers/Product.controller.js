@@ -110,6 +110,11 @@ productCtrl.agruparCategoriasFiltro = async (req,res) => {
 											category: categorias[i]._id
 										}
 									},
+                                    {
+                                        $match: {
+                                            company: new ObjectId(req.params.idCompany)
+                                        }
+                                    },
 									{
 										$group: { _id: '$subCategory' }
 									}
