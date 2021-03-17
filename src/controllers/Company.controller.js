@@ -95,7 +95,7 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
 
 companyCtrl.editCompany = async (req,res) => {
     try {
-        const { nameCompany, owner, phone,slug } = req.body;
+        const { nameCompany, owner, phone, slug } = req.body;
         const newCompany = {
             nameCompany: nameCompany,
             owner: owner,

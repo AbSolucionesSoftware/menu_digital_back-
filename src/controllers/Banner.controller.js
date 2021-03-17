@@ -60,6 +60,7 @@ bannerCtrl.deleteBaneer = async (req,res) => {
             upliadImagen.eliminarImagen(bannerDelete.imagenProductKey);
           }
           await modelBanner.findByIdAndDelete(bannerDelete._id);
+          res.status(200).json({message: "Banner eliminado."});
         }else{
           res.status(404).json({message: "Este banner no existe."});
         }
