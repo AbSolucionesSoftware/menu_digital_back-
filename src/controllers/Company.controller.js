@@ -5,6 +5,15 @@ const jwt = require("jsonwebtoken");
 const modelProduct = require("../models/Product");
 const upluadFile = require("../middleware/awsFile");
 
+companyCtrl.uploadImagen = async (req, res, next) => {
+    await upluadFile.upload(req, res, function (err) {
+      if (err) {
+        res.json({ message: err });
+      }
+      return next();
+    });
+};
+
 companyCtrl.createCompany = async (req,res) => {
     try {
         const { password, repeatPassword } = req.body;
@@ -95,12 +104,18 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
 
 companyCtrl.editCompany = async (req,res) => {
     try {
-        const { nameCompany, owner, phone, slug } = req.body;
-        const newCompany = {
-            nameCompany: nameCompany,
-            owner: owner,
-            phone: phone,
-            slug: slug
+        //const { nameCompany, owner, phone, slug } = req.body;
+        const company = await modelCompany.findById(req.params.idCompany);
+        const newCompany = req.body;
+        if(req.file){
+            newCompany.logoImagenKey = req.file.key;
+            newCompany.logoImagenUrl = req.file.location;
+            if(company.logoImagenKey){
+                upluadFile.eliminarImagen(company.logoImagenKey);
+            }
+        }else{
+            newCompany.logoImagenKey = company.logoImagenKey ? company.logoImagenKey : "";
+            newCompany.logoImagenUrl = company.logoImagenUrl ? company.logoImagenUrl : "";
         }
         await modelCompany.findByIdAndUpdate(req.params.idCompany,newCompany);
         const newCompanyBase = await modelCompany.findById(req.params.idCompany);

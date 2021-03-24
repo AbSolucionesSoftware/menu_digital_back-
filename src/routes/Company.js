@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const {
+  uploadImagen,
   createCompany,
   inicioSesion,
   createCompanyAdmin,
@@ -20,10 +21,9 @@ router.route("/admin").post(auth, createCompanyAdmin);
 
 router.route("/logIn").post(inicioSesion);
 
-router
-  .route("/:idCompany")
+router.route("/:idCompany")
   .get(getCompany)
-  .put(auth, editCompany)
+  .put(uploadImagen,auth, editCompany)
   .delete(deleteCompany);
 
 router.route("/resetPass/:idCompany").put(auth, resetPassCompany);
