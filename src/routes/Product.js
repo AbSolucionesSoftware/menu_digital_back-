@@ -7,7 +7,8 @@ const {
   getProductCompany,
   deleteProduct,
   agruparCategoriasFiltro,
-  filterSubCategorie
+  filterSubCategorie,
+  filtroBusqueda
 } = require("../controllers/Product.controller");
 const auth = require("../middleware/auth");
 
@@ -22,6 +23,8 @@ router.route("/edit/:idProducto")
 router.route("/categories/:idCompany").get(agruparCategoriasFiltro);
 
 router.route("/search/subCategory/").post(filterSubCategorie);
+
+router.route("/filter/search").get(filtroBusqueda);
 
 
 

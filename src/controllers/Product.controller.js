@@ -149,9 +149,9 @@ productCtrl.filtroBusqueda = async (req, res) => {
 					$match: {
                         $and: [  { company: new ObjectId(req.params.idCompany) } ],
 						$or: [
-							{ name: { $regex: '.*' + "Camarones" + '.*', $options: 'i' } },
-							{ category: { $regex: '.*' + "Camarones" + '.*', $options: 'i' } },
-							{ subCategory: { $regex: '.*' + "Camarones" + '.*', $options: 'i' } }
+							{ name: { $regex: '.*' + filter + '.*', $options: 'i' } },
+							{ category: { $regex: '.*' + filter + '.*', $options: 'i' } },
+							{ subCategory: { $regex: '.*' + filter + '.*', $options: 'i' } }
 						]
                         
 					}
