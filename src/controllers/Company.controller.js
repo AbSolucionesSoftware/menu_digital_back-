@@ -218,6 +218,16 @@ companyCtrl.getCompany = async (req,res) => {
     }
 }
 
+companyCtrl.getCompanySlug = async (req,res) => {
+    try {
+        const companys = await modelCompany.findOne({slug: req.params.idSlug});
+        res.status(200).json(companys);
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
 companyCtrl.deleteCompany = async (req,res) => {
     try {
         const company = await modelCompany.findById(req.params.idCompany);

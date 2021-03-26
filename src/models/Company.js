@@ -13,7 +13,10 @@ const companySchema = new Schema(
         phone: String,
         password: String,
         type: Boolean,
-        slug: String,
+        slug: {
+            type: String,
+            unique: true
+        },
         logoImagenKey: String,
         logoImagenUrl: String,
         priceEnvio: String

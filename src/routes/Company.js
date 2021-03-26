@@ -12,6 +12,7 @@ const {
   deleteCompany,
   resetPassCompanyUser,
   PublicCompany,
+  getCompanySlug
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
 
@@ -31,5 +32,7 @@ router.route("/resetPass/:idCompany").put(auth, resetPassCompany);
 router.route("/resetPass/user/:idCompany").put(auth, resetPassCompanyUser);
 
 router.route("/public/action/:idCompany").put(PublicCompany);
+
+router.route("/slug/company/:idSlug").get(getCompanySlug)
 
 module.exports = router;
