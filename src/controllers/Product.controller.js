@@ -189,4 +189,15 @@ productCtrl.filterSubCategorie = async (req,res) => {
     }
 }
 
+productCtrl.getProductCompanyCategory = async (req,res) => {
+    try {
+        const { category, company } = req.body;
+        const filterSub = await modelProduct.find({category: category, company: company});
+        res.status(200).json(filterSub);
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+
 module.exports = productCtrl;
