@@ -15,7 +15,7 @@ const productSchema = new Schema(
             type: Schema.ObjectId,
             ref: 'company'
         },
-        extrasActuve: Boolean,
+        extrasActive: Boolean,
         extras: String,
         precioExtra: Float,
     },
