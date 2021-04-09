@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require("jsonwebtoken");
 const modelProduct = require("../models/Product");
 const upluadFile = require("../middleware/awsFile");
+const email = require('../middleware/sendEmail');
 
 companyCtrl.uploadImagen = async (req, res, next) => {
     await upluadFile.upload(req, res, function (err) {
@@ -299,6 +300,31 @@ companyCtrl.PublicCompany = async (req,res) => {
     } catch (error) {
         res.status(500).json({message: "Error del server", error})
         console.log(error);
+    }
+}
+
+
+companyCtrl.sendEmail = async (req,res) => {
+    try {
+        const { pagina, mensaje, nombre,telefono = "", asunto, correo } = req.body;
+
+        const htmlBody = `
+            <div>
+                <p><strong>De: </strong>${nombre}<p>
+                <p><strong>Telefono: </strong>${telefono}<p>
+                <p><strong>Correo: </strong>${correo}<p>
+                <p><strong>Asunto: </strong>${asunto}<p>
+                <p><strong>Mensaje: </strong>${mensaje}<p>
+            </div>
+        `;
+
+        email.sendEmail(correo,`Contacto ${pagina}`,htmlBody,"contacto@comody.mx");
+        
+        res.status(200).json({message: "El correo fue enviado correctamente."});
+
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error); 
     }
 }
 

@@ -12,7 +12,8 @@ const {
   deleteCompany,
   resetPassCompanyUser,
   PublicCompany,
-  getCompanySlug
+  getCompanySlug,
+  sendEmail
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
 
@@ -35,6 +36,8 @@ router.route("/resetPass/user/:idCompany").put(auth, resetPassCompanyUser);
 
 router.route("/public/action/:idCompany").put(PublicCompany);
 
-router.route("/slug/company/:idSlug").get(getCompanySlug)
+router.route("/slug/company/:idSlug").get(getCompanySlug);
+
+router.route("/contact/send/email").post(sendEmail);
 
 module.exports = router;
