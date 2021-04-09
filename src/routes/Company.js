@@ -18,6 +18,8 @@ const auth = require("../middleware/auth");
 
 router.route("/").post(auth, createCompany).get(auth, getCompanys);
 
+router.route("/fullCompanys").get(getCompanys);
+
 router.route("/admin").post(auth, createCompanyAdmin);
 
 router.route("/logIn").post(inicioSesion);
