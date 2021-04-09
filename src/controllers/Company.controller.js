@@ -318,7 +318,7 @@ companyCtrl.sendEmail = async (req,res) => {
             </div>
         `;
 
-        email.sendEmail(correo,`Contacto ${pagina}`,htmlBody,"contacto@comody.mx");
+        email.sendEmail('contacto@comody.mx',`Contacto ${pagina}`,htmlBody,correo);
         
         res.status(200).json({message: "El correo fue enviado correctamente."});
 
