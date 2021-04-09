@@ -5,7 +5,7 @@ var Mongoose = require('mongoose');
 var ObjectId = Mongoose.Types.ObjectId;
 
 productCtrl.uploadImagen = async (req, res, next) => {
-     pliadImagen.upload(req, res, function (err) {
+    upliadImagen.upload(req, res, function (err) {
       if (err) {
         res.json({ message: err });
       }
