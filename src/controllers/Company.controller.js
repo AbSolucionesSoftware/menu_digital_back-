@@ -201,6 +201,16 @@ companyCtrl.resetPassCompanyUser = async (req,res) => {
 
 companyCtrl.getCompanys = async (req,res) => {
     try {
+        const companys = await modelCompany.find();
+        res.status(200).json(companys);
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}
+
+companyCtrl.getCompanysPage = async (req,res) => {
+    try {
         const companys = await modelCompany.find({public: true});
         res.status(200).json(companys);
     } catch (error) {

@@ -13,13 +13,14 @@ const {
   resetPassCompanyUser,
   PublicCompany,
   getCompanySlug,
-  sendEmail
+  sendEmail,
+  getCompanysPage
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
 
 router.route("/").post(auth, createCompany).get(auth, getCompanys);
 
-router.route("/fullCompanys").get(getCompanys);
+router.route("/fullCompanys").get(getCompanysPage);
 
 router.route("/admin").post(auth, createCompanyAdmin);
 
