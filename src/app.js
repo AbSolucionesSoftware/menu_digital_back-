@@ -14,5 +14,7 @@ app.use(express.json());
 app.use('/api/company',require('./routes/Company'));
 app.use('/api/banner',require('./routes/Banner'));
 app.use('/api/product',require('./routes/Product'));
+app.use('/api/categories',require('./routes/Categories'));
+app.use('/api/type',require('./routes/Type'));
 
 module.exports = app;
