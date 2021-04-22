@@ -63,7 +63,7 @@ classificationCtrl.deleteClassification = async (req,res) => {
 
 classificationCtrl.agregateSubClassification = async (req,res) => {
     try {
-        const {subCategory} = req.body;
+        const { subCategory } = req.body;
         await CategoriesModel.updateOne(
             {
                 _id: req.params.idCategory
@@ -71,7 +71,7 @@ classificationCtrl.agregateSubClassification = async (req,res) => {
             {
                 $addToSet: {
 					subCategories: {
-						subCategories: subCategory,
+						subCategory: subCategory,
 					}
 				}
             }
@@ -94,7 +94,7 @@ classificationCtrl.updateSubClassification = async (req,res) => {
                 $set: { 
                     'subCategories.$': 
                         { 
-                            subCategories: subCategory,
+                            subCategory: subCategory,
                         } 
                 }
             }
