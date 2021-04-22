@@ -73,7 +73,7 @@ categoriesCtrl.agregateSubCategorie = async (req,res) => {
             {
                 $addToSet: {
 					subCategories: {
-						subCategories: subCategory,
+						subCategory: subCategory,
 					}
 				}
             }
@@ -96,7 +96,7 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
                 $set: { 
                     'subCategories.$': 
                         { 
-                            subCategories: subCategory,
+                            subCategory: subCategory,
                         } 
                 }
             }
