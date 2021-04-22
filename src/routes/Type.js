@@ -3,7 +3,7 @@ const router = Router();
 const { createType, getType } = require("../controllers/typeClassification.controller");
 const auth = require("../middleware/auth");
 
-router.route("/:idCompany")
+router.route("/")
   .post(createType)
   .get(getType);
 
