@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const router = Router();
 
-const { createCategories, getCategories, updateCategorie, deleteCategorie, agregateSubCategorie, updateSubCategorie } = require("../controllers/Categories.controller");
+const { createCategories, getCategories, updateCategorie, deleteCategorie, agregateSubCategorie, updateSubCategorie, deleteSubCategorie } = require("../controllers/Categories.controller");
 
 const auth = require('../middleware/auth');
 
@@ -18,6 +18,6 @@ router.route("/action/:idCategory/subCategory")
 
 router.route("/action/:idCategory/subCategory/:idSubCategory")
     .put(updateSubCategorie)
-    // .delete();
+    .delete(deleteSubCategorie);
 
 module.exports = router;

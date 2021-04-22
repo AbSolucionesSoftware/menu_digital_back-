@@ -1,13 +1,11 @@
-const categoriesCtrl = {};
-const CategoriesModel = require("../models/Categories");
-const productModel = require("../models/Product");
+const classificationCtrl = {};
+const classificationModel = require("../models/Classification");
 
-
-categoriesCtrl.createCategories = async (req,res) => {
+classificationCtrl.createClassification = async (req,res) => {
     try {
-        const { category } = req.body;
-        const categories = new CategoriesModel({ idCompany: req.params.idCompany, category: category });
-        categories.save(async (err, response) => {
+        const { type } = req.body;
+        const typeClass = new classificationModel({ idCompany: req.params.idCompany, type: type });
+        typeClass.save(async (err, response) => {
             if(err){
                 res.status(500).json({ message: 'Ups, algo paso al agregar.', err });
             } else {
@@ -25,29 +23,29 @@ categoriesCtrl.createCategories = async (req,res) => {
     }
 }
 
-categoriesCtrl.getCategories = async (req,res) => {
+classificationCtrl.getClassification = async (req,res) => {
     try {
-        const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        res.status(200).json(categories);
+        const classTypes = await classificationModel.find({idCompany: req.params.idCompany});
+        res.status(200).json(classTypes);
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
     }
 }
 
-categoriesCtrl.updateCategorie = async (req,res) => {
+classificationCtrl.updateClassification = async (req,res) => {
     try {
-        const { category } = req.body;
+        const { type } = req.body;
         // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        await CategoriesModel.findByIdAndUpdate(req.params.idCategory,{category});
-        res.status(200).json({message: "Categoria editada."});
+        await classificationModel.findByIdAndUpdate(req.params.idCategory,{type});
+        res.status(200).json({message: "Editado correctamente."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
     }
 }
 
-categoriesCtrl.deleteCategorie = async (req,res) => {
+classificationCtrl.deleteClassification = async (req,res) => {
     try {
         const categories = await CategoriesModel.findById(req.params.idCategory);
         if(categories.subCategories.length > 0){
@@ -63,7 +61,7 @@ categoriesCtrl.deleteCategorie = async (req,res) => {
     }
 }
 
-categoriesCtrl.agregateSubCategorie = async (req,res) => {
+classificationCtrl.agregateSubClassification = async (req,res) => {
     try {
         const {subCategory} = req.body;
         await CategoriesModel.updateOne(
@@ -85,7 +83,7 @@ categoriesCtrl.agregateSubCategorie = async (req,res) => {
     }
 }
 
-categoriesCtrl.updateSubCategorie = async (req,res) => {
+classificationCtrl.updateSubClassification = async (req,res) => {
     try {
         const { subCategory } = req.body;
         await CategoriesModel.updateOne(
@@ -108,7 +106,7 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
     }
 }
 
-categoriesCtrl.deleteSubCategorie = async (req,res) => {
+classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
         /* const { subCategory } = req.body;
         await CategoriesModel.updateOne(
@@ -132,5 +130,4 @@ categoriesCtrl.deleteSubCategorie = async (req,res) => {
 }
 
 
-
-module.exports = categoriesCtrl;
+module.exports = classificationCtrl;
