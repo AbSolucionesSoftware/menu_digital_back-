@@ -67,7 +67,7 @@ classificationCtrl.agregateSubClassification = async (req,res) => {
 
         await classificationModel.updateOne(
             {
-                _id: req.params.idCategory
+                _id: req.params.idClassification
             },
             {
                 $addToSet: {
