@@ -9,14 +9,14 @@ router.route("/:idCompany")
     .post(createClassification)
     .get(getClassification);
 
-router.route("/action/:idCategory")
-    .put(updateClassification)
+router.route("/action/:idClassification")
+    // .put(updateClassification)
     .delete(deleteClassification);
 
-router.route("/action/:idCategory/subCategory")
+router.route("/action/:idClassification/subClassification")
     .post(agregateSubClassification);
 
-router.route("/action/:idCategory/subCategory/:idSubCategory")
+router.route("/action/:idClassification/subClassification/:idSubClassification")
     .put(updateSubClassification)
     .delete(deleteSubClassification);
 

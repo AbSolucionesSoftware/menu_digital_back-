@@ -1,6 +1,7 @@
 const categoriesCtrl = {};
 const CategoriesModel = require("../models/Categories");
 const productModel = require("../models/Product");
+// const 
 
 
 categoriesCtrl.createCategories = async (req,res) => {
@@ -88,6 +89,9 @@ categoriesCtrl.agregateSubCategorie = async (req,res) => {
 categoriesCtrl.updateSubCategorie = async (req,res) => {
     try {
         const { subCategory } = req.body;
+        const datos = await productModel.findById(req.params.id);
+		const tallasProducto = datos.tallas;
+		const tallas = tallasProducto.filter((x) => x._id == req.params.idtalla);
         await CategoriesModel.updateOne(
             {
                 'subCategories._id': req.params.idSubCategory
@@ -110,7 +114,7 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
 
 categoriesCtrl.deleteSubCategorie = async (req,res) => {
     try {
-        /* const { subCategory } = req.body;
+         const { subCategory } = req.body;
         await CategoriesModel.updateOne(
             {
                 'subCategories._id': req.params.idSubCategory
@@ -123,7 +127,7 @@ categoriesCtrl.deleteSubCategorie = async (req,res) => {
                         } 
                 }
             }
-        ); */
+        ); 
         res.status(200).json({message: "Sub categoria agregada."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);

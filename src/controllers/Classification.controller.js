@@ -37,7 +37,7 @@ classificationCtrl.updateClassification = async (req,res) => {
     try {
         const { type } = req.body;
         // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        await classificationModel.findByIdAndUpdate(req.params.idCategory,{type});
+        await classificationModel.findByIdAndUpdate(req.params.idClassification,{type});
         res.status(200).json({message: "Editado correctamente."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
@@ -47,11 +47,11 @@ classificationCtrl.updateClassification = async (req,res) => {
 
 classificationCtrl.deleteClassification = async (req,res) => {
     try {
-        const categories = await CategoriesModel.findById(req.params.idCategory);
-        if(categories.subCategories.length > 0){
-            res.status(500).json({message: "Esta categoria aun tiene sub categorias, no se puede eliminar."})
+        const classification = await classificationModel.findById(req.params.idClassification);
+        if(classification.types.length > 0){
+            res.status(500).json({message: "Esta classificacion aun tiene sub clasificaciones, no se puede eliminar."})
         }else{
-            await CategoriesModel.findByIdAndDelete(req.params.idCategory);
+            await classificationModel.findByIdAndDelete(req.params.idClassification);
             res.status(200).json({message: "Eliminado correctamente."});
         }
         // res.status(200).json(categories);
@@ -63,7 +63,7 @@ classificationCtrl.deleteClassification = async (req,res) => {
 
 classificationCtrl.agregateSubClassification = async (req,res) => {
     try {
-        const { subCategory } = req.body;
+        const { name, precio, color = "" } = req.body;
         await CategoriesModel.updateOne(
             {
                 _id: req.params.idCategory
