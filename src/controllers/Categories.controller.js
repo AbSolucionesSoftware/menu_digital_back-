@@ -117,18 +117,17 @@ categoriesCtrl.deleteSubCategorie = async (req,res) => {
          const { subCategory } = req.body;
         await CategoriesModel.updateOne(
             {
-                'subCategories._id': req.params.idSubCategory
-            },
-            {
-                $set: { 
-                    'subCategories.$': 
-                        { 
-                            subCategories: subCategory,
-                        } 
-                }
-            }
+				_id: req.params.idCategory
+			},
+			{
+				$pull: {
+					subCategories: {
+						_id: req.params.idSubCategory
+					}
+				}
+			},
         ); 
-        res.status(200).json({message: "Sub categoria agregada."});
+        res.status(200).json({message: "Eliminada."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);

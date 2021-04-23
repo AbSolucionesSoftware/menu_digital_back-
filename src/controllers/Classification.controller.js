@@ -63,15 +63,18 @@ classificationCtrl.deleteClassification = async (req,res) => {
 
 classificationCtrl.agregateSubClassification = async (req,res) => {
     try {
-        const { name, precio, color = "" } = req.body;
-        await CategoriesModel.updateOne(
+        const { name, price /* color = "" */ } = req.body;
+
+        await classificationModel.updateOne(
             {
                 _id: req.params.idCategory
             },
             {
                 $addToSet: {
-					subCategories: {
-						subCategory: subCategory,
+					types: {
+						name: name,
+                        price: price,
+                        // color: color
 					}
 				}
             }
@@ -85,16 +88,17 @@ classificationCtrl.agregateSubClassification = async (req,res) => {
 
 classificationCtrl.updateSubClassification = async (req,res) => {
     try {
-        const { subCategory } = req.body;
-        await CategoriesModel.updateOne(
+        const { name, price } = req.body;
+        await classificationModel.updateOne(
             {
-                'subCategories._id': req.params.idSubCategory
+                'types._id': req.params.idSubClassification
             },
             {
                 $set: { 
-                    'subCategories.$': 
+                    'types.$': 
                         { 
-                            subCategory: subCategory,
+                            name: name,
+                            price: price
                         } 
                 }
             }
@@ -108,21 +112,19 @@ classificationCtrl.updateSubClassification = async (req,res) => {
 
 classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
-        /* const { subCategory } = req.body;
-        await CategoriesModel.updateOne(
+        await classificationModel.updateOne(
             {
-                'subCategories._id': req.params.idSubCategory
-            },
-            {
-                $set: { 
-                    'subCategories.$': 
-                        { 
-                            subCategories: subCategory,
-                        } 
-                }
-            }
-        ); */
-        res.status(200).json({message: "Sub categoria agregada."});
+				_id: req.params.idClassification
+			},
+			{
+				$pull: {
+					types: {
+						_id: req.params.idSubClassification
+					}
+				}
+			},
+        );
+        res.status(200).json({message: "Eliminada."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);

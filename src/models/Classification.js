@@ -10,7 +10,7 @@ const classification = new Schema(
         types: [
             {
                 name: String,
-                precio: String,
+                price: String,
                 color: String
             }
         ]
