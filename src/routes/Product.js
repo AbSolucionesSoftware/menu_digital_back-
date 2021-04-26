@@ -30,7 +30,7 @@ router.route("/filter/search/:idCompany").post(filtroBusqueda);
 
 router.route("/search/company/category/").post(getProductCompanyCategory);
 
-router.route("/aggregate/classification/:idProduct").post(aggregateClassification),
+router.route("/aggregate/classification/:idProduct").post(aggregateClassification);
 
 
 
