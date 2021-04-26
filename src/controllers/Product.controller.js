@@ -203,9 +203,10 @@ productCtrl.getProductCompanyCategory = async (req,res) => {
 productCtrl.aggregateClassification = async (req,res) => {
     try {
         const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        console.log(req.body);
         await modelProduct.updateOne(
             {
-                _id: req.para.s.idProduct
+                _id: req.params.idProduct
             },
             {
                 $addToSet: {
@@ -220,6 +221,53 @@ productCtrl.aggregateClassification = async (req,res) => {
             }
         );
         res.status(200).json({message: "agregado"});
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+
+productCtrl.updateClassification = async (req,res) => {
+    try {
+        const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        await modelProduct.updateOne(
+            {
+                'classifications._id': req.params.idClassification
+            },
+            {
+                $set: {
+					'classifications.$': {
+						typeClassification: typeClassification,
+                        amountClassification: amountClassification,
+                        statusAmount: statusAmount,
+                        types: types
+					}
+				}
+            }
+        );
+        res.status(200).json({message: "Editado"});
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+
+productCtrl.deleteClassification = async (req,res) => {
+    try {
+        // const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        await modelProduct.updateOne(
+            {
+                _id: req.params.idProduct
+            },
+            {
+                $pull: {
+					classifications: {
+						_id: req.params.idClassification
+					}
+				}
+            }
+        );
+        res.status(200).json({message: "Editado"});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);

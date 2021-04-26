@@ -10,7 +10,9 @@ const {
   filterSubCategorie,
   filtroBusqueda,
   getProductCompanyCategory,
-  aggregateClassification
+  aggregateClassification,
+  updateClassification,
+  deleteClassification
 } = require("../controllers/Product.controller");
 const auth = require("../middleware/auth");
 
@@ -31,6 +33,8 @@ router.route("/filter/search/:idCompany").post(filtroBusqueda);
 router.route("/search/company/category/").post(getProductCompanyCategory);
 
 router.route("/aggregate/classification/:idProduct").post(aggregateClassification);
+
+router.route("/action/classification/:idProduct/subClassification/:idClassification").put(updateClassification).delete(deleteClassification);
 
 
 
