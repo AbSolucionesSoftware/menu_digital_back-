@@ -200,4 +200,30 @@ productCtrl.getProductCompanyCategory = async (req,res) => {
     }
 }
 
+productCtrl.aggregateClassification = async (req,res) => {
+    try {
+        const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        await modelProduct.updateOne(
+            {
+                _id: req.para.s.idProduct
+            },
+            {
+                $addToSet: {
+					classifications: {
+						typeClassification: typeClassification,
+                        amountClassification: amountClassification,
+                        statusAmount: statusAmount,
+                        types: types
+                        // color: color
+					}
+				}
+            }
+        );
+        res.status(200).json({message: "agregado"});
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+
 module.exports = productCtrl;

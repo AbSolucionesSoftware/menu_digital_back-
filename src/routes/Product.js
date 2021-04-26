@@ -9,7 +9,8 @@ const {
   agruparCategoriasFiltro,
   filterSubCategorie,
   filtroBusqueda,
-  getProductCompanyCategory
+  getProductCompanyCategory,
+  aggregateClassification
 } = require("../controllers/Product.controller");
 const auth = require("../middleware/auth");
 
@@ -28,6 +29,8 @@ router.route("/search/subCategory/").post(filterSubCategorie);
 router.route("/filter/search/:idCompany").post(filtroBusqueda);
 
 router.route("/search/company/category/").post(getProductCompanyCategory);
+
+router.route("/aggregate/classification/:idProduct").post(aggregateClassification),
 
 
 
