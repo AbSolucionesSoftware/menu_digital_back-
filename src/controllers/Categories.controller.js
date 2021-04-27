@@ -39,9 +39,20 @@ categoriesCtrl.getCategories = async (req,res) => {
 categoriesCtrl.updateCategorie = async (req,res) => {
     try {
         const { category } = req.body;
+        const cat = await CategoriesModel.findById(req.params.idCategory);
         // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        await CategoriesModel.findByIdAndUpdate(req.params.idCategory,{category});
-        res.status(200).json({message: "Categoria editada."});
+        await productModel.find({category: cat.category}, async (err, productos) => {
+            if(productos.length > 0){
+                for(var i=0; i < productos.length; i++){
+                    await productModel.findByIdAndUpdate(productos[i]._id,{category: category});
+                }
+                await CategoriesModel.findByIdAndUpdate(req.params.idCategory,{category});
+                res.status(200).json({message: "Categoria editada."});
+            }else{
+                await CategoriesModel.findByIdAndUpdate(req.params.idCategory,{category});
+                res.status(200).json({message: "Categoria editada."});
+            }
+        });
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
@@ -89,23 +100,44 @@ categoriesCtrl.agregateSubCategorie = async (req,res) => {
 categoriesCtrl.updateSubCategorie = async (req,res) => {
     try {
         const { subCategory } = req.body;
-        // const datos = await productModel.findById(req.params.id);
-		// const tallasProducto = datos.tallas;
-		// const tallas = tallasProducto.filter((x) => x._id == req.params.idtalla);
-        await CategoriesModel.updateOne(
-            {
-                'subCategories._id': req.params.idSubCategory
-            },
-            {
-                $set: { 
-                    'subCategories.$': 
-                        { 
-                            subCategory: subCategory,
-                        } 
+        const cat = await CategoriesModel.findById(req.params.idCategory);
+        // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
+        await productModel.find({subCategory: cat.subCategory}, async (err, productos) => {
+            if(productos.length > 0){
+                for(var i=0; i < productos.length; i++){
+                    await productModel.findByIdAndUpdate(productos[i]._id,{subCategory: subCategory});
                 }
+                await CategoriesModel.updateOne(
+                    {
+                        'subCategories._id': req.params.idSubCategory
+                    },
+                    {
+                        $set: { 
+                            'subCategories.$': 
+                                { 
+                                    subCategory: subCategory,
+                                } 
+                        }
+                    }
+                );
+                res.status(200).json({message: "Sub categoria agregada."});
+            }else{
+                await CategoriesModel.updateOne(
+                    {
+                        'subCategories._id': req.params.idSubCategory
+                    },
+                    {
+                        $set: { 
+                            'subCategories.$': 
+                                { 
+                                    subCategory: subCategory,
+                                } 
+                        }
+                    }
+                );
+                res.status(200).json({message: "Sub categoria agregada."});
             }
-        );
-        res.status(200).json({message: "Sub categoria agregada."});
+        });
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
