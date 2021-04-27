@@ -115,7 +115,9 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
         const productCompany = await producModel.find({company: req.params.idCompany},(err, products) => {
             let cont = 0;
+            
             if(products.length > 0){
+                console.log(products[0]);
                 for(var i=0; i < products.length; i++){
                     if(products[i].classifications.length > 0){
                         for(var z=0; z < products[i].classifications.length; z++){
