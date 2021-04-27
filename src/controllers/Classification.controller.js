@@ -49,29 +49,11 @@ classificationCtrl.updateClassification = async (req,res) => {
 classificationCtrl.deleteClassification = async (req,res) => {
     try {
         const classification = await classificationModel.findById(req.params.idClassification);
-        const productCompany = await producModel.find({company: classification.idCompany});
-        let cont = 0;
-        if(productCompany.length > 0){
-            for(var i=0; i < productCompany.length; i++){
-                if(productCompany[i].classifications.length > 0){
-                    for(var z=0; z < productCompany[i].classifications.length; z++){
-                        if(productCompany[i].classifications[z]._idClassification === classification._id){
-                            cont++;
-                        }
-                    }
-                }
-            }
-        }
-        console.log(cont);
-        if(cont > 0){
-            res.status(500).json({message: "No se puede eliminar"});
+        if(classification.types.length > 0){
+            res.status(500).json({message: "Esta classificacion aun tiene sub clasificaciones, no se puede eliminar."})
         }else{
-            if(classification.types.length > 0){
-                res.status(500).json({message: "Esta classificacion aun tiene sub clasificaciones, no se puede eliminar."})
-            }else{
-                await classificationModel.findByIdAndDelete(req.params.idClassification);
-                res.status(200).json({message: "Eliminado correctamente."});
-            }
+            await classificationModel.findByIdAndDelete(req.params.idClassification);
+            res.status(200).json({message: "Eliminado correctamente."});
         }
         // res.status(200).json(categories);
     } catch (error) {
@@ -131,7 +113,20 @@ classificationCtrl.updateSubClassification = async (req,res) => {
 
 classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
-        
+        const productCompany = await producModel.find({company: classification.idCompany});
+        let cont = 0;
+        if(productCompany.length > 0){
+            for(var i=0; i < productCompany.length; i++){
+                if(productCompany[i].classifications.length > 0){
+                    for(var z=0; z < productCompany[i].classifications.length; z++){
+                        if(productCompany[i].classifications[z]._idClassification === classification._id){
+                            cont++;
+                        }
+                    }
+                }
+            }
+        }
+        console.log(cont);
         await classificationModel.updateOne(
             {
 				_id: req.params.idClassification

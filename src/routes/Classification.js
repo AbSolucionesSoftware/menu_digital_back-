@@ -13,20 +13,20 @@ const {
 
 const auth = require("../middleware/auth");
 
-router.route("/:idCompany").post(createClassification).get(getClassification);
+router.route("/:idCompany").post(auth,createClassification).get(getClassification);
 
 router
   .route("/action/:idClassification")
   // .put(updateClassification)
-  .delete(deleteClassification);
+  .delete(auth,deleteClassification);
 
 router
   .route("/action/:idClassification/subClassification")
-  .post(agregateSubClassification);
+  .post(auth,agregateSubClassification);
 
 router
   .route("/action/:idClassification/subClassification/:idSubClassification")
-  .put(updateSubClassification)
-  .delete(deleteSubClassification);
+  .put(auth,updateSubClassification)
+  .delete(auth,deleteSubClassification);
 
 module.exports = router;
