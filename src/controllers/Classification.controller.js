@@ -133,14 +133,19 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                         }
                     }
                 }
+                if(cont > 0){
+                    res.status(500).json({message: "Esta no se puede editar, productos existentes."});
+                }else{
+                    res.status(200).json({message: "Eliminada."});
+                }
                 return cont;
             }else{
                 return cont;
             }
         });
-        console.log(productCompany);
+        // console.log(productCompany);
         // console.log(cont);
-        console.log(req.params.idCompany);
+        // console.log(req.params.idCompany);
         /* await classificationModel.updateOne(
             {
 				_id: req.params.idClassification
@@ -153,7 +158,7 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
 				}
 			},
         ); */
-        res.status(200).json({message: "Eliminada."});
+        
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
