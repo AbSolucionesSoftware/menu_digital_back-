@@ -113,7 +113,7 @@ classificationCtrl.updateSubClassification = async (req,res) => {
 
 classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
-        /* const productCompany = await producModel.find({company: req.params.idCompany},(err, products) => {
+        const productCompany = await producModel.find({company: req.params.idCompany},(err, products) => {
             let cont = 0;
             if(products.length > 0){
                 for(var i=0; i < products.length; i++){
@@ -125,12 +125,15 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                         }
                     }
                 }
+                return cont;
+            }else{
+                return cont;
             }
-        }); */
-        
+        });
+        console.log(productCompany);
         // console.log(cont);
         console.log(req.params.idCompany);
-        await classificationModel.updateOne(
+        /* await classificationModel.updateOne(
             {
 				_id: req.params.idClassification
 			},
@@ -141,7 +144,7 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
 					}
 				}
 			},
-        );
+        ); */
         res.status(200).json({message: "Eliminada."});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
