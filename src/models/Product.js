@@ -23,8 +23,10 @@ const productSchema = new Schema(
                 typeClassification: String,
                 amountClassification: Number,
                 statusAmount: Boolean,
+                _idClassification: String,
                 types: [
-                    {
+                    {   
+                        _idType: String,
                         name: String,
                         price: String,
                     }

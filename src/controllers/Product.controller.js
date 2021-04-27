@@ -202,7 +202,7 @@ productCtrl.getProductCompanyCategory = async (req,res) => {
 
 productCtrl.aggregateClassification = async (req,res) => {
     try {
-        const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        const { typeClassification, amountClassification, statusAmount, types, _idClassification } = req.body;
         console.log(req.body);
         await modelProduct.updateOne(
             {
@@ -211,6 +211,7 @@ productCtrl.aggregateClassification = async (req,res) => {
             {
                 $addToSet: {
 					classifications: {
+                        _idClassification: _idClassification,
 						typeClassification: typeClassification,
                         amountClassification: amountClassification,
                         statusAmount: statusAmount,
@@ -229,7 +230,8 @@ productCtrl.aggregateClassification = async (req,res) => {
 
 productCtrl.updateClassification = async (req,res) => {
     try {
-        const { typeClassification, amountClassification, statusAmount, types } = req.body;
+        const { typeClassification, amountClassification, statusAmount, types, _idClassification } = req.body;
+        console.log(req.body);
         await modelProduct.updateOne(
             {
                 'classifications._id': req.params.idClassification
@@ -237,6 +239,7 @@ productCtrl.updateClassification = async (req,res) => {
             {
                 $set: {
 					'classifications.$': {
+                        _idClassification: _idClassification,
 						typeClassification: typeClassification,
                         amountClassification: amountClassification,
                         statusAmount: statusAmount,
