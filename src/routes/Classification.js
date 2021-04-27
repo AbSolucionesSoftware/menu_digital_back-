@@ -25,7 +25,7 @@ router
   .post(auth,agregateSubClassification);
 
 router
-  .route("/action/:idClassification/subClassification/:idSubClassification")
+  .route("/action/:idClassification/subClassification/:idSubClassification/company/:idCompany")
   .put(auth,updateSubClassification)
   .delete(auth,deleteSubClassification);
 
