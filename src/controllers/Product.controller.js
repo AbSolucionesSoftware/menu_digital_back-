@@ -221,6 +221,7 @@ productCtrl.aggregateClassification = async (req,res) => {
 				}
             }
         );
+        
         res.status(200).json({message: "agregado"});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
