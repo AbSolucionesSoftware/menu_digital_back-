@@ -113,20 +113,22 @@ classificationCtrl.updateSubClassification = async (req,res) => {
 
 classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
-        /* const productCompany = await producModel.find({company: req.params.idCompany});
-        let cont = 0;
-        if(productCompany.length > 0){
-            for(var i=0; i < productCompany.length; i++){
-                if(productCompany[i].classifications.length > 0){
-                    for(var z=0; z < productCompany[i].classifications.length; z++){
-                        if(productCompany[i].classifications[z]._idClassification === classification._id){
-                            cont++;
+        /* const productCompany = await producModel.find({company: req.params.idCompany},(err, products) => {
+            let cont = 0;
+            if(products.length > 0){
+                for(var i=0; i < products.length; i++){
+                    if(products[i].classifications.length > 0){
+                        for(var z=0; z < products[i].classifications.length; z++){
+                            if(products[i].classifications[z]._idClassification === classification._id){
+                                cont++;
+                            }
                         }
                     }
                 }
             }
-        }
-        console.log(cont); */
+        }); */
+        
+        // console.log(cont);
         console.log(req.params.idCompany);
         await classificationModel.updateOne(
             {

@@ -26,8 +26,18 @@ productCtrl.createProduct = async (req,res) => {
             newProduct.imagenProductUrl = "";
         }
         newProduct.company = req.params.idCompany;
-        await newProduct.save();
-        res.status(200).json({message: "Producto agregado"})
+        await newProduct.save((err, response) => {
+            if (err) {
+                res.status(500).json({ message: 'Ups, also paso en la base', err });
+            } else {
+                if (!response) {
+                    res.status(404).json({ message: 'esa producto no existe' });
+                } else {
+                    res.status(200).json({ message: 'Producto agregado', producto: response });
+                }
+            }
+        });
+        // res.status(200).json({message: "Producto agregado"})
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
