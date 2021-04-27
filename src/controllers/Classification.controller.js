@@ -117,7 +117,7 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
             let cont = 0;
             
             if(products.length > 0){
-                console.log(products[0]);
+                // console.log(products[0]);
                 for(var i=0; i < products.length; i++){
                     if(products[i].classifications){
                         if(products[i].classifications.length > 0){
