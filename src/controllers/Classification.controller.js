@@ -166,22 +166,6 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                 );
             }
         });
-        // console.log(productCompany);
-        // console.log(cont);
-        // console.log(req.params.idCompany);
-        /* await classificationModel.updateOne(
-            {
-				_id: req.params.idClassification
-			},
-			{
-				$pull: {
-					types: {
-						_id: req.params.idSubClassification
-					}
-				}
-			},
-        ); */
-        
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
