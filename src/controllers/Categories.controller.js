@@ -103,10 +103,8 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
         const cat = await CategoriesModel.findById(req.params.idCategory);
         const subCategoryBase = cat.subCategories;
 		const sub = subCategoryBase.filter((x) => x._id == req.params.idSubCategory);
-        console.log(sub);
-        res.status(200).json({message: "Sub categoria agregada."});
-        // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        /* await productModel.find({subCategory: cat.subCategory}, async (err, productos) => {
+        const subCa = sub[0];
+        await productModel.find({subCategory: subCa.subCategory}, async (err, productos) => {
             if(productos.length > 0){
                 for(var i=0; i < productos.length; i++){
                     await productModel.findByIdAndUpdate(productos[i]._id,{subCategory: subCategory});
@@ -141,7 +139,7 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
                 );
                 res.status(200).json({message: "Sub categoria agregada."});
             }
-        }); */
+        });
         // const datos = await productModel.findById(req.params.id);
 		// const tallasProducto = datos.tallas;
 		// const tallas = tallasProducto.filter((x) => x._id == req.params.idtalla);
