@@ -4,7 +4,7 @@ const router = Router();
 const {
   createClassification,
   getClassification,
-  updateClassification,
+  // updateClassification,
   deleteClassification,
   agregateSubClassification,
   updateSubClassification,
