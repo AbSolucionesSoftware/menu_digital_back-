@@ -122,9 +122,9 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                     if(products[i].classifications){
                         if(products[i].classifications.length > 0){
                             for(var z=0; z < products[i].classifications.length; z++){
-                                if(products[i].classifications[z]._idClassification === classification._id){
+                                /* if(products[i].classifications[z]._idClassification === classification._id){
                                     cont++;
-                                }
+                                } */
                             }
                         }
                     }
