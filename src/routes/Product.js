@@ -34,7 +34,7 @@ router.route("/search/company/category/").post(getProductCompanyCategory);
 
 router.route("/aggregate/classification/:idProduct").post(aggregateClassification);
 
-router.route("/action/classification/:idProduct/subClassification/:idClassification").put(updateClassification).delete(deleteClassification);
+router.route("/action/classification/:idProduct/subClassification/:idClassification/company/:idCompany").put(updateClassification).delete(deleteClassification);
 
 
 

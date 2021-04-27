@@ -23,7 +23,7 @@ router
 router.route("/action/:idCategory/subCategory").post(agregateSubCategorie);
 
 router
-  .route("/action/:idCategory/subCategory/:idSubCategory")
+  .route("/action/:idCategory/subCategory/:idSubCategory/company/:idCompany")
   .put(updateSubCategorie)
   .delete(deleteSubCategorie);
 
