@@ -136,11 +136,34 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                 if(cont > 0){
                     res.status(500).json({message: `Esta no se puede editar, productos existentes: ${cont}.`});
                 }else{
+                    await classificationModel.updateOne(
+                        {
+                            _id: req.params.idClassification
+                        },
+                        {
+                            $pull: {
+                                types: {
+                                    _id: req.params.idSubClassification
+                                }
+                            }
+                        },
+                    );
                     res.status(200).json({message: "Eliminada."});
                 }
                 // return cont;
             }else{
-                return cont;
+                await classificationModel.updateOne(
+                    {
+                        _id: req.params.idClassification
+                    },
+                    {
+                        $pull: {
+                            types: {
+                                _id: req.params.idSubClassification
+                            }
+                        }
+                    },
+                );
             }
         });
         // console.log(productCompany);
