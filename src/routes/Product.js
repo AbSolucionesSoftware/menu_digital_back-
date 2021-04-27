@@ -12,7 +12,8 @@ const {
   getProductCompanyCategory,
   aggregateClassification,
   updateClassification,
-  deleteClassification
+  deleteClassification,
+  getOneProduct
 } = require("../controllers/Product.controller");
 const auth = require("../middleware/auth");
 
@@ -22,7 +23,8 @@ router.route("/:idCompany")
 
 router.route("/edit/:idProducto")
   .put(auth, uploadImagen, editProduct)
-  .delete(auth, deleteProduct);
+  .delete(auth, deleteProduct)
+  .get(auth, getOneProduct);
 
 router.route("/categories/:idCompany").get(agruparCategoriasFiltro);
 
