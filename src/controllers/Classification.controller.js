@@ -127,6 +127,7 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
             }
         }
         console.log(cont); */
+        console.log(req.params.idCompany);
         await classificationModel.updateOne(
             {
 				_id: req.params.idClassification
