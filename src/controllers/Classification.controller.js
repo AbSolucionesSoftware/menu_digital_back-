@@ -113,7 +113,7 @@ classificationCtrl.updateSubClassification = async (req,res) => {
 
 classificationCtrl.deleteSubClassification = async (req,res) => {
     try {
-        const productCompany = await producModel.find({company: req.params.idCompany},(err, products) => {
+        const productCompany = await producModel.find({company: req.params.idCompany},async (err, products) => {
             let cont = 0;
             
             if(products.length > 0){
