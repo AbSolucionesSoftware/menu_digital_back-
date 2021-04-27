@@ -134,11 +134,11 @@ classificationCtrl.deleteSubClassification = async (req,res) => {
                     }
                 }
                 if(cont > 0){
-                    res.status(500).json({message: "Esta no se puede editar, productos existentes."});
+                    res.status(500).json({message: `Esta no se puede editar, productos existentes: ${cont}.`});
                 }else{
                     res.status(200).json({message: "Eliminada."});
                 }
-                return cont;
+                // return cont;
             }else{
                 return cont;
             }

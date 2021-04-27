@@ -283,7 +283,7 @@ productCtrl.deleteClassification = async (req,res) => {
 				}
             }
         );
-        res.status(200).json({message: "Editado"});
+        res.status(200).json({message: "Eliminado"});
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
