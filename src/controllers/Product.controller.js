@@ -292,7 +292,7 @@ productCtrl.deleteClassification = async (req,res) => {
 
 productCtrl.getOneProduct = async (req,res) => {
     try {
-        const product = await modelProduct.findById(req.params.idProduct);
+        const product = await modelProduct.findById(req.params.idProducto);
         res.status(200).json(product);
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);

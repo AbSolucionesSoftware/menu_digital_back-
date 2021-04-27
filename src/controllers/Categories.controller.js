@@ -40,7 +40,6 @@ categoriesCtrl.updateCategorie = async (req,res) => {
     try {
         const { category } = req.body;
         const cat = await CategoriesModel.findById(req.params.idCategory);
-        // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
         await productModel.find({category: cat.category}, async (err, productos) => {
             if(productos.length > 0){
                 for(var i=0; i < productos.length; i++){
