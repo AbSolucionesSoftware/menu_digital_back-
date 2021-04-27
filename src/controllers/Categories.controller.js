@@ -101,8 +101,8 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
     try {
         const { subCategory } = req.body;
         const cat = await CategoriesModel.findById(req.params.idCategory);
-        const subCategory = cat.subCategories;
-		const sub = subCategory.filter((x) => x._id == req.params.idSubCategory);
+        const subCategoryBase = cat.subCategories;
+		const sub = subCategoryBase.filter((x) => x._id == req.params.idSubCategory);
         console.log(sub);
         res.status(200).json({message: "Sub categoria agregada."});
         // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
