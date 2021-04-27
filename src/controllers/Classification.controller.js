@@ -62,7 +62,7 @@ classificationCtrl.deleteClassification = async (req,res) => {
                 }
             }
         }
-
+        console.log(cont);
         if(cont > 0){
             res.status(500).json({message: "No se puede eliminar"});
         }else{
