@@ -101,8 +101,12 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
     try {
         const { subCategory } = req.body;
         const cat = await CategoriesModel.findById(req.params.idCategory);
+        const subCategory = cat.subCategories;
+		const sub = subCategory.filter((x) => x._id == req.params.idSubCategory);
+        console.log(sub);
+        res.status(200).json({message: "Sub categoria agregada."});
         // const categories = await CategoriesModel.find({idCompany: req.params.idCompany});
-        await productModel.find({subCategory: cat.subCategory}, async (err, productos) => {
+        /* await productModel.find({subCategory: cat.subCategory}, async (err, productos) => {
             if(productos.length > 0){
                 for(var i=0; i < productos.length; i++){
                     await productModel.findByIdAndUpdate(productos[i]._id,{subCategory: subCategory});
@@ -137,7 +141,11 @@ categoriesCtrl.updateSubCategorie = async (req,res) => {
                 );
                 res.status(200).json({message: "Sub categoria agregada."});
             }
-        });
+        }); */
+        // const datos = await productModel.findById(req.params.id);
+		// const tallasProducto = datos.tallas;
+		// const tallas = tallasProducto.filter((x) => x._id == req.params.idtalla);
+
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
