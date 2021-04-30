@@ -242,9 +242,9 @@ productCtrl.aggregateClassification = async (req,res) => {
 productCtrl.updateClassification = async (req,res) => {
     try {
         const { typeClassification, amountClassification, statusAmount, types, _idClassification     } = req.body;
-        // console.log(req.body);
-        console.log(req.params.idClassification);
-        console.log(types);
+        console.log(req.body);
+        // console.log(req.params.idClassification);
+        // console.log(types);
         await modelProduct.updateOne(
             {
                 'classifications._id': req.params.idClassification
