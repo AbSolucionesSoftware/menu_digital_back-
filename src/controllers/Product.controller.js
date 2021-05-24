@@ -16,7 +16,7 @@ productCtrl.uploadImagen = async (req, res, next) => {
 productCtrl.createProduct = async (req,res) => {
     try {
         /* const { category, subCategory, name, price, description } = req.body; */
-        console.log(req.body);
+        // console.log(req.body);
         const newProduct = new modelProduct(req.body);
         if(req.file){
             newProduct.imagenProductKey = req.file.key;
@@ -25,6 +25,7 @@ productCtrl.createProduct = async (req,res) => {
             newProduct.imagenProductKey = "";
             newProduct.imagenProductUrl = "";
         }
+        newProduct.public = true;
         newProduct.company = req.params.idCompany;
         await newProduct.save((err, response) => {
             if (err) {
@@ -299,5 +300,17 @@ productCtrl.getOneProduct = async (req,res) => {
         console.log(error);
     }
 }
+
+productCtrl.publicProduct = async (req,res) => {
+    try {
+        const { public } = req.body;
+        console.log(req.body);
+        await modelProduct.findByIdAndUpdate(req.params.idProduct,{public: public});
+        res.status(200).json({message: "Cambio realizado."});
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+} //NUEVA RUTA DE PRODUCTO PUBLICO
 
 module.exports = productCtrl;

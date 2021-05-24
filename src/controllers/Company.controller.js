@@ -103,6 +103,178 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
     }
 }
 
+
+companyCtrl.createSucursal = async (req,res) => {
+    try {
+        const {
+            nombreSucursal, 
+            calleNumeroSucursal, 
+            coloniaSucursal, 
+            telefonoSucursal, 
+            ciudadSucursal,
+            costoEnvio,
+            cpSucursal} = req.body;
+        await modelCompany.updateOne(
+            {
+                _id: req.params.idCompany
+            },
+            {
+                $addToSet: {
+					sucursales: {
+                        nombreSucursal: nombreSucursal,
+                        calleNumeroSucursal: calleNumeroSucursal,
+                        coloniaSucursal: coloniaSucursal,
+                        telefonoSucursal: telefonoSucursal,
+                        ciudadSucursal: ciudadSucursal,
+                        cpSucursal: cpSucursal,
+                        costoEnvio: costoEnvio
+					}
+				}
+            }
+        );
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+        {
+            _id: newCompanyBase._id,
+            nameCompany: newCompanyBase.nameCompany,
+            nameUser: newCompanyBase.nameUser,
+            public: newCompanyBase.public,
+            owner: newCompanyBase.owner,
+            phone: newCompanyBase.phone,
+            type: newCompanyBase.type,
+            slug: newCompanyBase.slug,
+            sucursales: newCompanyBase.sucursales,
+            sucursalesActive: newCompanyBase.sucursalesActive
+        },
+            process.env.AUTH_KEY
+        );
+
+        res.status(200).json({token, message: "Sucursal agregada con exito"});
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+} //LISTA  con retorno de datos
+
+companyCtrl.editSucursal = async (req,res) => {
+    try {
+        const {
+            nombreSucursal, 
+            calleNumeroSucursal, 
+            coloniaSucursal, 
+            telefonoSucursal, 
+            ciudadSucursal, 
+            cpSucursal,
+            costoEnvio
+        } = req.body;
+
+        await modelCompany.updateOne(
+            {
+                'sucursales._id': req.params.idSucursal
+            },
+            {
+                $set: { 
+                    'sucursales.$': 
+                        { 
+                            nombreSucursal: nombreSucursal,
+                            calleNumeroSucursal: calleNumeroSucursal,
+                            coloniaSucursal: coloniaSucursal,
+                            telefonoSucursal: telefonoSucursal,
+                            ciudadSucursal: ciudadSucursal,
+                            cpSucursal: cpSucursal,
+                            costoEnvio: costoEnvio
+                        } 
+                }
+            }
+        );
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+        {
+            _id: newCompanyBase._id,
+            nameCompany: newCompanyBase.nameCompany,
+            nameUser: newCompanyBase.nameUser,
+            public: newCompanyBase.public,
+            owner: newCompanyBase.owner,
+            phone: newCompanyBase.phone,
+            type: newCompanyBase.type,
+            slug: newCompanyBase.slug,
+            sucursales: newCompanyBase.sucursales,
+            sucursalesActive: newCompanyBase.sucursalesActive
+        },
+            process.env.AUTH_KEY
+        );
+        res.status(200).json({token, message: "Sucursal editada"});
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+} //LISTA  con retorno de datos
+
+companyCtrl.deleteSucursal = async (req,res) => {
+    try {
+        await modelCompany.updateOne(
+            {
+				_id: req.params.idCompany
+			},
+			{
+				$pull: {
+					sucursales: {
+						_id: req.params.idSucursal
+					}
+				}
+			},
+        ); 
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+        {
+            _id: newCompanyBase._id,
+            nameCompany: newCompanyBase.nameCompany,
+            nameUser: newCompanyBase.nameUser,
+            public: newCompanyBase.public,
+            owner: newCompanyBase.owner,
+            phone: newCompanyBase.phone,
+            type: newCompanyBase.type,
+            slug: newCompanyBase.slug,
+            sucursales: newCompanyBase.sucursales,
+            sucursalesActive: newCompanyBase.sucursalesActive
+        },
+            process.env.AUTH_KEY
+        );
+        res.status(200).json({token, message: "Sucursal Eliminada"});
+
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+} //LISTA CON RETORNO DE DATOS
+
+companyCtrl.publicSucursales = async (req,res) => {
+    try {
+        const { sucursalesActive } = req.body;
+        await modelCompany.findByIdAndUpdate(req.params.idCompany, {sucursalesActive: sucursalesActive});
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+        {
+            _id: newCompanyBase._id,
+            nameCompany: newCompanyBase.nameCompany,
+            nameUser: newCompanyBase.nameUser,
+            public: newCompanyBase.public,
+            owner: newCompanyBase.owner,
+            phone: newCompanyBase.phone,
+            type: newCompanyBase.type,
+            slug: newCompanyBase.slug,
+            sucursales: newCompanyBase.sucursales,
+            sucursalesActive: newCompanyBase.sucursalesActive
+        },
+            process.env.AUTH_KEY
+        );
+        res.status(200).json({token, message: "Cambio realizado."});
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}//LISTA CON RETORNO DE DATOS
+
 companyCtrl.editCompany = async (req,res) => {
     try {
         //const { nameCompany, owner, phone, slug } = req.body;
@@ -129,7 +301,9 @@ companyCtrl.editCompany = async (req,res) => {
               owner: newCompanyBase.owner,
               phone: newCompanyBase.phone,
               type: newCompanyBase.type,
-              slug: newCompanyBase.slug
+              slug: newCompanyBase.slug,
+              sucursales: newCompanyBase.sucursales,
+              sucursalesActive: newCompanyBase.sucursalesActive
             },
             process.env.AUTH_KEY
           );
@@ -284,7 +458,9 @@ companyCtrl.inicioSesion = async (req,res) => {
                           owner: userBase.owner,
                           phone: userBase.phone,
                           type: userBase.type,
-                          slug: userBase.slug
+                          slug: userBase.slug,
+                          sucursales: userBase.sucursales,
+                          sucursalesActive: userBase.sucursalesActive
                         },
                         process.env.AUTH_KEY
                       );
@@ -304,7 +480,6 @@ companyCtrl.inicioSesion = async (req,res) => {
 companyCtrl.PublicCompany = async (req,res) => {
     try {
         const { public } = req.body;
-        console.log(public);
         await modelCompany.findByIdAndUpdate(req.params.idCompany,{public: public});
         res.status(200).json({message: "Cambio realizado."});
     } catch (error) {

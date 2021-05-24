@@ -17,6 +17,7 @@ const productSchema = new Schema(
         },
         extrasActive: Boolean,
         extras: String,
+        public: Boolean,
         precioExtra: Float,
         classifications: [
             {

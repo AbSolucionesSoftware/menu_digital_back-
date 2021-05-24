@@ -9,9 +9,8 @@ async function main() {
         console.log('Server on port ', app.get('port'));
     } catch (error) {
         console.log(error);
+        
     }
 
 }
-
-
 main();

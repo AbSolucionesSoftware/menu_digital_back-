@@ -4,7 +4,7 @@ const router = Router();
 const {
   createClassification,
   getClassification,
-  // updateClassification,
+  updateClassification,
   deleteClassification,
   agregateSubClassification,
   updateSubClassification,
@@ -17,7 +17,7 @@ router.route("/:idCompany").post(auth,createClassification).get(getClassificatio
 
 router
   .route("/action/:idClassification")
-  // .put(updateClassification)
+  .put(updateClassification)
   .delete(auth,deleteClassification);
 
 router

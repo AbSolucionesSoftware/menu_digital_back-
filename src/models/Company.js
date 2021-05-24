@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-
 const companySchema = new Schema(
     {
         nameCompany: String,
@@ -19,7 +18,32 @@ const companySchema = new Schema(
         },
         logoImagenKey: String,
         logoImagenUrl: String,
-        priceEnvio: String
+        priceEnvio: String,
+
+        calleNumeroPrin: String,
+        cpPrin: String,
+        coloniaPrin: String,
+        ciudadPrin: String,
+        estado: String,
+        
+        sucursalesActive: Boolean, 
+        sucursales: [
+            {
+                costoEnvio:  String,
+                nombreSucursal: String,
+                calleNumeroSucursal: String,
+                coloniaSucursal: String,
+                telefonoSucursal:String,
+                ciudadSucursal: String,
+                cpSucursal: String
+            },
+        ],
+        redesSociales:
+            {
+                facebook: String,
+                instagram: String,
+                twiter: String
+            },
     },
     {
         timestamps: true

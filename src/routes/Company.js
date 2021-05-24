@@ -14,11 +14,15 @@ const {
   PublicCompany,
   getCompanySlug,
   sendEmail,
-  getCompanysPage
+  getCompanysPage,
+  createSucursal,
+  editSucursal,
+  deleteSucursal,
+  publicSucursales
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
-
-router.route("/").post(auth, createCompany).get(auth, getCompanys);
+//AGREGAR EL auth, 
+router.route("/").post(auth,createCompany).get(auth,getCompanys);
 
 router.route("/fullCompanys").get(getCompanysPage);
 
@@ -28,8 +32,18 @@ router.route("/logIn").post(inicioSesion);
 
 router.route("/:idCompany")
   .get(getCompany)
-  .put(uploadImagen,auth, editCompany)
+  .put(uploadImagen, auth, editCompany)
   .delete(deleteCompany);
+
+
+router.route("/sucursal/:idCompany")
+  .post(createSucursal)//LISTA SOLO AGREGAR TOKEN
+  .put(publicSucursales);
+
+router.route("/action/company/:idCompany/sucursal/:idSucursal")
+  .put(editSucursal) //LISTO SOLO AGREGAR EL TOKEN
+  .delete(deleteSucursal);//LISTA SOLO AGREGAR TOKEN
+
 
 router.route("/resetPass/:idCompany").put(auth, resetPassCompany);
 
