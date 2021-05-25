@@ -1,6 +1,7 @@
 const productCtrl = {};
 const upliadImagen = require('../middleware/awsFile');
 const modelProduct = require('../models/Product');
+const CategoriesModel = require("../models/Categories");
 var Mongoose = require('mongoose');
 var ObjectId = Mongoose.Types.ObjectId;
 
@@ -200,11 +201,22 @@ productCtrl.filterSubCategorie = async (req,res) => {
     }
 }
 
-productCtrl.getProductCompanyCategory = async (req,res) => {
+productCtrl.getProductCompanyCategory = async (req,res) => { //ESTA SERA LA MODIFICADA PARA PODER ATRAER TODOS LOS PRODUCTOS
     try {
-        const { category, company } = req.body;
-        const filterSub = await modelProduct.find({category: category, company: company});
-        res.status(200).json(filterSub);
+        const { idCompany, category } = req.body;
+        const productosSubs = [];
+        const categories = await CategoriesModel.findOne({idCompany: idCompany, category: category});
+        for (let sub = 0; sub < categories.subCategories.length; sub++) {
+            const subCategory = categories.subCategories[sub];
+            const productos = await modelProduct.find({company: idCompany, subCategory: subCategory.subCategory})
+            productosSubs.push({"nameSub":subCategory.subCategory, "productosSub": productos})
+        }
+        res.status(200).json(productosSubs);
+        //una vez tengfa las subcates
+        //una ves las tenga las mapeo 
+        //hago un find con esas categorias
+        //traer subs y despues un map para guardar en un objeto, con un find a productos
+
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);

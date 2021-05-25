@@ -33,7 +33,7 @@ router.route("/search/subCategory/").post(filterSubCategorie);
 
 router.route("/filter/search/:idCompany").post(filtroBusqueda);
 
-router.route("/search/company/category/").post(getProductCompanyCategory);
+router.route("/search/company/category/").post(getProductCompanyCategory);//RUAT QUE TRAE PRODUCTOS AGRUPADOS POR SUBCATES
 
 router.route("/public/action/:idProduct").put(publicProduct);
 
