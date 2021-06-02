@@ -17,5 +17,6 @@ app.use('/api/product',require('./routes/Product'));
 app.use('/api/categories',require('./routes/Categories'));
 app.use('/api/type',require('./routes/Type'));
 app.use('/api/classification',require('./routes/Classification'));
+app.use('/api/pedido',require('./routes/Pedido'));
 
-module.exports = app;
+module.exports = app;   

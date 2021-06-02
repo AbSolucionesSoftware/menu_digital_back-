@@ -35,7 +35,7 @@ router.route("/filter/search/:idCompany").post(filtroBusqueda);
 
 router.route("/search/company/category/").post(getProductCompanyCategory);//RUAT QUE TRAE PRODUCTOS AGRUPADOS POR SUBCATES
 
-router.route("/public/action/:idProduct").put(publicProduct);
+router.route("/public/action/:idProduct").put(publicProduct); //RUTA PARA PUBLICAR LOS PRODUCTOS
 
 router.route("/aggregate/classification/:idProduct").post(aggregateClassification);
 
