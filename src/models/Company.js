@@ -38,12 +38,18 @@ const companySchema = new Schema(
                 cpSucursal: String
             },
         ],
-        redesSociales:
-            {
-                facebook: String,
-                instagram: String,
-                twiter: String
-            },
+        redesSociales:{
+            facebook: String,
+            instagram: String,
+            twiter: String
+        },
+        horario:[{
+            dia: String,
+            key: Number,
+            horarioInicial: String,
+            horarioFinal: String,
+            close: Boolean
+        }],
     },
     {
         timestamps: true

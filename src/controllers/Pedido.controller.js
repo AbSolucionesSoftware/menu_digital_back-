@@ -37,7 +37,7 @@ pedidoCtrl.getPedidos = async (req,res) => {
 		// 	limit: parseInt(limit)
 		// };
 
-        const pedidosCompany = await modelPedido.find({idCompany: req.params.idCompany});
+        const pedidosCompany = await modelPedido.find({idCompany: req.params.idCompany}).sort({createdAt: -1}) ;
         // await modelPedido.paginate(pedidosCompany, options, (err, postStored) => {
 		// 	if (err) {
         //         res.status(500).json({ message: "Error en el servidor primeras lineas",err });
