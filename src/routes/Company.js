@@ -15,10 +15,13 @@ const {
   getCompanySlug,
   sendEmail,
   getCompanysPage,
+
   createSucursal,
   editSucursal,
   deleteSucursal,
-  publicSucursales
+  publicSucursales,
+  createHorarios,
+  publicHorarios
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
 //AGREGAR EL auth, 
@@ -35,6 +38,9 @@ router.route("/:idCompany")
   .put(uploadImagen, auth, editCompany)
   .delete(deleteCompany);
 
+router.route("/horarios/:idCompany").put(createHorarios); //ACOMODAR HORARIOS
+
+router.route("/action/publicHorarios/:idCompany").put(publicHorarios);
 
 router.route("/sucursal/:idCompany")
   .post(createSucursal)//LISTA SOLO AGREGAR TOKEN
@@ -56,3 +62,4 @@ router.route("/slug/company/:idSlug").get(getCompanySlug);
 router.route("/contact/send/email").post(sendEmail);
 
 module.exports = router;
+

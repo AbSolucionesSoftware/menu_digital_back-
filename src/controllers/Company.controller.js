@@ -22,6 +22,7 @@ companyCtrl.createCompany = async (req,res) => {
         const newCompany = new modelCompany(req.body);
         newCompany.public = false;
         newCompany.type = false;
+        newCompany.horariosActive = false;
         if(!password || !repeatPassword){
             res.status(404).json({ message: "Las contrasenas son obligatorias." });
         } else {
@@ -144,7 +145,9 @@ companyCtrl.createSucursal = async (req,res) => {
             type: newCompanyBase.type,
             slug: newCompanyBase.slug,
             sucursales: newCompanyBase.sucursales,
-            sucursalesActive: newCompanyBase.sucursalesActive
+            sucursalesActive: newCompanyBase.sucursalesActive,
+            horario: newCompanyBase.horario,
+            horariosActive: newCompanyBase.horariosActive,
         },
             process.env.AUTH_KEY
         );
@@ -165,7 +168,7 @@ companyCtrl.editSucursal = async (req,res) => {
             telefonoSucursal, 
             ciudadSucursal, 
             cpSucursal,
-            costoEnvio
+            costoEnvio,
         } = req.body;
 
         await modelCompany.updateOne(
@@ -182,7 +185,7 @@ companyCtrl.editSucursal = async (req,res) => {
                             telefonoSucursal: telefonoSucursal,
                             ciudadSucursal: ciudadSucursal,
                             cpSucursal: cpSucursal,
-                            costoEnvio: costoEnvio
+                            costoEnvio: costoEnvio,
                         } 
                 }
             }
@@ -199,7 +202,9 @@ companyCtrl.editSucursal = async (req,res) => {
             type: newCompanyBase.type,
             slug: newCompanyBase.slug,
             sucursales: newCompanyBase.sucursales,
-            sucursalesActive: newCompanyBase.sucursalesActive
+            sucursalesActive: newCompanyBase.sucursalesActive,
+            horario: newCompanyBase.horario,
+            horariosActive: newCompanyBase.horariosActive,
         },
             process.env.AUTH_KEY
         );
@@ -236,7 +241,9 @@ companyCtrl.deleteSucursal = async (req,res) => {
             type: newCompanyBase.type,
             slug: newCompanyBase.slug,
             sucursales: newCompanyBase.sucursales,
-            sucursalesActive: newCompanyBase.sucursalesActive
+            sucursalesActive: newCompanyBase.sucursalesActive,
+            horario: newCompanyBase.horario,
+            horariosActive: newCompanyBase.horariosActive,
         },
             process.env.AUTH_KEY
         );
@@ -264,7 +271,9 @@ companyCtrl.publicSucursales = async (req,res) => {
             type: newCompanyBase.type,
             slug: newCompanyBase.slug,
             sucursales: newCompanyBase.sucursales,
-            sucursalesActive: newCompanyBase.sucursalesActive
+            sucursalesActive: newCompanyBase.sucursalesActive,
+            horario: newCompanyBase.horario,
+            horariosActive: newCompanyBase.horariosActive,
         },
             process.env.AUTH_KEY
         );
@@ -274,6 +283,71 @@ companyCtrl.publicSucursales = async (req,res) => {
         console.log(error);
     }
 }//LISTA CON RETORNO DE DATOS
+
+companyCtrl.createHorarios = async ( req, res ) => {
+    try {
+        const company = await modelCompany.findById(req.params.idCompany);
+        
+        await modelCompany.findByIdAndUpdate(company._id, { horario: req.body });
+
+        const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        const token = jwt.sign(
+            {
+              _id: newCompanyBase._id,
+              nameCompany: newCompanyBase.nameCompany,
+              nameUser: newCompanyBase.nameUser,
+              public: newCompanyBase.public,
+              owner: newCompanyBase.owner,
+              phone: newCompanyBase.phone,
+              type: newCompanyBase.type,
+              slug: newCompanyBase.slug,
+              sucursales: newCompanyBase.sucursales,
+              sucursalesActive: newCompanyBase.sucursalesActive,
+              horario: newCompanyBase.horario,
+              horariosActive: newCompanyBase.horariosActive
+            },
+            process.env.AUTH_KEY
+        );
+
+        res.status(200).json({message: "Horarios agregados.", token});
+
+    } catch (error) {
+        res.status(500).json({message: 'Hubo un error al eliminar Horarios', error});
+    }
+}//LISTA CON RETORNO DE DATOS DE HORARIO
+
+companyCtrl.publicHorarios = async (req,res) => {
+
+    try {
+        const { horariosActive } = req.body;
+        await modelCompany.findByIdAndUpdate(req.params.idCompany, {horariosActive: horariosActive});
+
+        // const newCompanyBase = await modelCompany.findById(req.params.idCompany);
+        // const token = jwt.sign(
+        // {
+        //     _id: newCompanyBase._id,
+        //     nameCompany: newCompanyBase.nameCompany,
+        //     nameUser: newCompanyBase.nameUser,
+        //     public: newCompanyBase.public,
+        //     owner: newCompanyBase.owner,
+        //     phone: newCompanyBase.phone,
+        //     type: newCompanyBase.type,
+        //     slug: newCompanyBase.slug,
+        //     sucursales: newCompanyBase.sucursales,
+        //     sucursalesActive: newCompanyBase.sucursalesActive,
+        //     horario: newCompanyBase.horario,
+        //     horariosActive: newCompanyBase.horariosActive,
+        // },
+        //     process.env.AUTH_KEY
+        // );
+        
+
+        res.status(200).json({message: "Cambio realizado."});
+    } catch (error) {
+        res.status(500).json({message: "Error del server", error})
+        console.log(error);
+    }
+}  
 
 companyCtrl.editCompany = async (req,res) => {
     try {
@@ -290,7 +364,7 @@ companyCtrl.editCompany = async (req,res) => {
             newCompany.logoImagenKey = company.logoImagenKey ? company.logoImagenKey : "";
             newCompany.logoImagenUrl = company.logoImagenUrl ? company.logoImagenUrl : "";
         }
-        await modelCompany.findByIdAndUpdate(req.params.idCompany,newCompany);
+        await modelCompany.findByIdAndUpdate(req.params.idCompany, newCompany);
         const newCompanyBase = await modelCompany.findById(req.params.idCompany);
         const token = jwt.sign(
             {
@@ -303,7 +377,9 @@ companyCtrl.editCompany = async (req,res) => {
               type: newCompanyBase.type,
               slug: newCompanyBase.slug,
               sucursales: newCompanyBase.sucursales,
-              sucursalesActive: newCompanyBase.sucursalesActive
+              sucursalesActive: newCompanyBase.sucursalesActive,
+              horario: newCompanyBase.horario,
+              horariosActive: newCompanyBase.horariosActive
             },
             process.env.AUTH_KEY
           );
@@ -460,7 +536,9 @@ companyCtrl.inicioSesion = async (req,res) => {
                           type: userBase.type,
                           slug: userBase.slug,
                           sucursales: userBase.sucursales,
-                          sucursalesActive: userBase.sucursalesActive
+                          sucursalesActive: userBase.sucursalesActive,
+                          horario: userBase.horario,
+                          horariosActive: userBase.horariosActive,
                         },
                         process.env.AUTH_KEY
                       );
@@ -486,8 +564,7 @@ companyCtrl.PublicCompany = async (req,res) => {
         res.status(500).json({message: "Error del server", error})
         console.log(error);
     }
-}
-
+}           
 
 companyCtrl.sendEmail = async (req,res) => {
     try {
