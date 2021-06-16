@@ -19,6 +19,13 @@ const productSchema = new Schema(
         extras: String,
         public: Boolean,
         precioExtra: Float,
+
+        codigoName: { 
+            type: String,
+            unique: true
+        },
+        // precioDescuento: String,
+
         classifications: [
             {
                 typeClassification: String,

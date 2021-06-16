@@ -9,10 +9,15 @@ const cuponesShema = new Schema(
             type: Schema.ObjectId,
             ref: 'company'
         },
-        couponName: String,
+        couponName: { 
+            type: String,
+            unique: true
+        },
+        couponLimitado: Boolean,
         discountCoupon: String,
         expirationDate: String,
-        activeCoupon: Boolean
+        activeCoupon: Boolean,
+        limitCompra: String
     },{
         timestamps: true
     }

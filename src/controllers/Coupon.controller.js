@@ -8,7 +8,7 @@ couponCtrl.createCoupon = async (req,res) => {
         const newCoupon = new couponModel(req.body);
 
         newCoupon.idCompany = req.params.idCompany;
-        newCoupon.activeCoupon = false;
+        newCoupon.activeCoupon = true;
         newCoupon.coupon = req.body.coupon;
 
         await newCoupon.save((err, response) => {
