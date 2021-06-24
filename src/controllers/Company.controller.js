@@ -104,7 +104,6 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
     }
 }
 
-
 companyCtrl.createSucursal = async (req,res) => {
     try {
         const {
@@ -468,6 +467,7 @@ companyCtrl.getCompanysPage = async (req,res) => {
         console.log(error);
     }
 }
+
 
 companyCtrl.getCompany = async (req,res) => {
     try {

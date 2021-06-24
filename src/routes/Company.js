@@ -25,7 +25,7 @@ const {
 } = require("../controllers/Company.controller");
 const auth = require("../middleware/auth");
 //AGREGAR EL auth, 
-router.route("/").post(auth,createCompany).get(auth,getCompanys);
+router.route("/").post(auth, createCompany).get(auth,getCompanys);
 
 router.route("/fullCompanys").get(getCompanysPage);
 

@@ -20,11 +20,12 @@ const productSchema = new Schema(
         public: Boolean,
         precioExtra: Float,
 
-        codigoName: { 
-            type: String,
-            unique: true
+        couponName: String,
+        idCoupon: {
+            type: Schema.ObjectId,
+            ref: 'cupones'
         },
-        // precioDescuento: String,
+        precioDescuento: String,
 
         classifications: [
             {
