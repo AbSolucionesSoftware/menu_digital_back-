@@ -11,17 +11,29 @@ ctrlFuncticon.generateCode = (length) => {
 }
 
 ctrlFuncticon.fechaCaducidad = (fecha) => {
-  if (!fecha) {
-      return null;
-  } else {
-      var newdate = new Date(fecha);
-      const añoActual = newdate.getFullYear();
-      const mesActual = newdate.getMonth() + 1;
-      const hoy = newdate.getDate() +1;
-      const fechaCaducidad = añoActual + "-" + mesActual + "-" +  (hoy+1);
-      return fechaCaducidad;
-  }
+	if (!fecha) {
+		return null;
+	} else {
+		var newdate = new Date(fecha);
+		const añoActual = newdate.getFullYear();
+		const mesActual = newdate.getMonth() + 1;
+		const hoy = newdate.getDate();
+		const fechaCaducidad = añoActual + "-" + mesActual + "-" +  hoy;
+		return fechaCaducidad;
+	}
 };
+
+
+ctrlFuncticon.fechaActual = () => {
+	var fecha = new Date();
+    const añoActual = fecha.getFullYear();
+    const hoy = fecha.getDate();
+    const mesActual = fecha.getMonth() + 1;
+
+    const fechaActual = añoActual + "-" + mesActual + "-" +  hoy;
+	return fechaActual;
+}
+
 
 ctrlFuncticon.formatoFecha = (fecha) => {
 	if (!fecha) {

@@ -9,7 +9,8 @@ const {
     createCouponEspecial,
     editCouponEspecial,
     getCouponEspecial,
-    deleteCouponEspecial
+    deleteCouponEspecial,
+    verificarCuponCompra
  } = require('../controllers/Coupon.controller');
 const auth = require('../middleware/auth');
 
@@ -24,6 +25,7 @@ router.route("/action/coupon/:idCoupon")
     
 router.route("/actionActive/coupon/:idCoupon").put(auth, activeCoupon);
 
+router.route("/actionVerificar/empresa/:idCompany/coupon/:nameCoupon").get(verificarCuponCompra);
 
 
 //RUTAS DE CUPONES ESPECIALES

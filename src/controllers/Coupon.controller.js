@@ -2,7 +2,7 @@ const couponCtrl = {};
 const couponModel = require('../models/Cupones');
 const modelProduct = require('../models/Product')
 var Mongoose = require('mongoose');
-const { fechaCaducidad, formatoFecha } = require('../middleware/reuser')
+const { fechaCaducidad, formatoFecha, fechaActual } = require('../middleware/reuser')
 
 couponCtrl.createCoupon = async (req,res) => {
     try {
@@ -79,6 +79,37 @@ couponCtrl.activeCoupon = async (req,res) => {
     }
 } //LISTO
 
+couponCtrl.verificarCuponCompra = async (req,res) => {
+    try {
+        const couponsCompany = await couponModel.find({idCompany: req.params.idCompany});
+
+        couponsCompany.forEach(codigo => {
+            if (codigo.couponName === req.params.nameCoupon ) {
+                const expirationDate = (fechaCaducidad(codigo.expirationDate));
+
+                var caducidad = new Date(expirationDate); //31 de diciembre de 2015
+                var actual = new Date(fechaActual());
+
+                if (codigo.activeCoupon === false) {
+                    res.status(200).json({ message: 'Lo s   entimos este código ya expiro', valor: false });
+                }else{
+                    if (caducidad < actual) {
+                        couponModel.findByIdAndUpdate(codigo._id, {activeCoupon: false});
+                        res.status(200).json({ message: 'Lo sentimos este código ya expiro', valor: false });
+                    }else{
+                        res.status(200).json({ cupon: codigo, message: 'Codigo valido', valor: true });
+                    }
+                }
+            }else{
+               
+            }
+        })
+
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+} //LISTO 
 
 //RUTAS DE CUPOPNES LIMITADOS
 couponCtrl. createCouponEspecial = async (req,res) => {
@@ -117,21 +148,26 @@ couponCtrl.getCouponEspecial = async (req,res) => {
     try {
         const productoElegido = await modelProduct.findById(req.params.idProducto).populate('idCoupon');
 
-        var now = new Date();
-        const fechaExpiracionCupon = (formatoFecha(fechaCaducidad(productoElegido.idCoupon.expirationDate)));
-        const fechaActual = formatoFecha(now);
+        const expirationDate = (fechaCaducidad(productoElegido.idCoupon.expirationDate));
+
+        var caducidad = new Date(expirationDate); //31 de diciembre de 2015
+        var actual = new Date(fechaActual());
 
         if (productoElegido.couponName && productoElegido.couponName === req.params.nameCoupon) {
-            if (fechaExpiracionCupon === fechaActual) {
-                // console.log("no entro aqui ");
+            if (productoElegido.idCoupon.activeCoupon === false) {
                 res.status(200).json({ message: 'Lo sentimos este código ya expiro', valor: false });
             }else{
-                // console.log("entro aqui ");
-                res.status(200).json({ cuponDiscount: productoElegido.idCoupon.discountCoupon, codigo: productoElegido.idCoupon.couponName, message: 'Codigo valido', valor: true });
+                if (caducidad < actual) {
+                    await couponModel.findByIdAndUpdate(productoElegido.idCoupon._id, {activeCoupon: false});
+                    res.status(200).json({ message: 'Lo sentimos este código ya expiro', valor: false });
+                }else{
+                    res.status(200).json({ cuponDiscount: productoElegido.idCoupon.discountCoupon, codigo: productoElegido.idCoupon.couponName, message: 'Codigo valido', valor: true });
+                }
             }
         }else{
             res.status(200).json({ message: 'Este producto no tiene este código activo', valor: false  });
         }
+        
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);
@@ -168,6 +204,7 @@ couponCtrl.editCouponEspecial = async (req,res) => {
 
         
         const productos = req.body.productos;
+        // console.log(req.body.productos)
         const editarProducto = {couponName: req.body.couponName, idCoupon: req.params.idCoupon};
         for (let i = 0; i < productos.length; i++) {
             await modelProduct.findByIdAndUpdate(productos[i]._id, editarProducto);
