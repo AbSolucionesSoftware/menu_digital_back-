@@ -20,4 +20,6 @@ app.use('/api/classification',require('./routes/Classification'));
 app.use('/api/pedido',require('./routes/Pedido'));
 app.use('/api/coupon',require('./routes/Coupons'));
 
+app.use('/api/adminBanner',require('./routes/AdminBanner'));
+
 module.exports = app;   

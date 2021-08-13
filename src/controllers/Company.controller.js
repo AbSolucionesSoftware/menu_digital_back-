@@ -20,7 +20,7 @@ companyCtrl.createCompany = async (req,res) => {
         const { password, repeatPassword } = req.body;
         console.log(req.body);
         const newCompany = new modelCompany(req.body);
-        newCompany.public = false;
+        newCompany.public = true;
         newCompany.type = false;
         newCompany.horariosActive = false;
         if(!password || !repeatPassword){
