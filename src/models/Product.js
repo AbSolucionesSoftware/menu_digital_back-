@@ -19,6 +19,14 @@ const productSchema = new Schema(
         extras: String,
         public: Boolean,
         precioExtra: Float,
+
+        couponName: String,
+        idCoupon: {
+            type: Schema.ObjectId,
+            ref: 'cupones'
+        },
+        precioDescuento: String,
+
         classifications: [
             {
                 typeClassification: String,

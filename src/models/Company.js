@@ -12,6 +12,7 @@ const companySchema = new Schema(
         phone: String,
         password: String,
         type: Boolean,
+        politicas: Boolean,
         slug: {
             type: String,
             unique: true

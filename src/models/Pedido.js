@@ -12,6 +12,7 @@ const pedidoShema = new Schema(
         telefono: String,
         estadoPedido: String,
         sucursal: String,
+        cupon: String,
         idCompany: {
             type: Schema.ObjectId,
             ref: 'company'

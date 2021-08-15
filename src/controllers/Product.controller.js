@@ -26,15 +26,22 @@ productCtrl.createProduct = async (req,res) => {
             newProduct.imagenProductKey = "";
             newProduct.imagenProductUrl = "";
         }
+
         newProduct.public = true;
+        newProduct.couponName = "";
         newProduct.company = req.params.idCompany;
+        // console.log(newProduct);
+
         await newProduct.save((err, response) => {
             if (err) {
                 res.status(500).json({ message: 'Ups, also paso en la base', err });
+                console.log(err, "Entro entro aqui");
             } else {
                 if (!response) {
+                    console.log("pedo aqui");
                     res.status(404).json({ message: 'esa producto no existe' });
                 } else {
+                    console.log("si debio registrar");
                     res.status(200).json({ message: 'Producto agregado', producto: response });
                 }
             }
@@ -195,6 +202,17 @@ productCtrl.filterSubCategorie = async (req,res) => {
         const filterSub = await modelProduct.find({subCategory: subCategory, company: company});
 
         res.status(200).json(filterSub);
+    } catch (error) {
+        res.status(500).json({message: "Error del servidor"}, error);
+        console.log(error);
+    }
+}
+productCtrl.filterCategorie = async (req,res) => {
+    try {
+        const { category, company } = req.body;
+        const filterCate = await modelProduct.find({category: category, company: company});
+
+        res.status(200).json(filterCate);
     } catch (error) {
         res.status(500).json({message: "Error del servidor"}, error);
         console.log(error);

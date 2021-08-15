@@ -8,6 +8,7 @@ const {
   deleteProduct,
   agruparCategoriasFiltro,
   filterSubCategorie,
+  filterCategorie,
   filtroBusqueda,
   getProductCompanyCategory,
   aggregateClassification,
@@ -30,6 +31,8 @@ router.route("/edit/:idProducto")
 router.route("/categories/:idCompany").get(agruparCategoriasFiltro);
 
 router.route("/search/subCategory/").post(filterSubCategorie);
+
+router.route("/search/category/").post(filterCategorie); //PRODCUTOS DIRECTO POR CATEGORIAS
 
 router.route("/filter/search/:idCompany").post(filtroBusqueda);
 

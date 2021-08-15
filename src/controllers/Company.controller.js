@@ -20,7 +20,7 @@ companyCtrl.createCompany = async (req,res) => {
         const { password, repeatPassword } = req.body;
         console.log(req.body);
         const newCompany = new modelCompany(req.body);
-        newCompany.public = false;
+        newCompany.public = true;
         newCompany.type = false;
         newCompany.horariosActive = false;
         if(!password || !repeatPassword){
@@ -103,7 +103,6 @@ companyCtrl.createCompanyAdmin = async (req,res) => {
         console.log(error);
     }
 }
-
 
 companyCtrl.createSucursal = async (req,res) => {
     try {
@@ -468,6 +467,7 @@ companyCtrl.getCompanysPage = async (req,res) => {
         console.log(error);
     }
 }
+
 
 companyCtrl.getCompany = async (req,res) => {
     try {
