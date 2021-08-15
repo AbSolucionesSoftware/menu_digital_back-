@@ -15,6 +15,7 @@ bannerCtrlAdmin.createBanner = async (req, res) => {
     try {
         const newBanner = new modelBannerAdmin(req.body);
         if(req.file){
+          console.log(req.body);
           newBanner.imgBannerAdminKey = req.file.key;
           newBanner.imgBannerAdminUrl = req.file.location;
           newBanner.frente = true;
