@@ -43,7 +43,6 @@ const companySchema = new Schema(
             instagram: String,
             twiter: String
         },
-        
         horariosActive: Boolean,
         horario:[{
             dia: String,
